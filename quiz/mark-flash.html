@@ -1,0 +1,320 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>八卦マーク・エンドレスクイズ</title>
+<style>
+:root{
+  --bg:#f5f0e6;
+  --panel:#fffdf7;
+  --text:#2f2a25;
+  --sub:#756b61;
+  --line:#d7cbbb;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+  background:linear-gradient(180deg,#f7f2e9,#eee5d7);
+  color:var(--text);
+  min-height:100vh;
+}
+main{
+  width:min(680px,100%);
+  margin:0 auto;
+  padding:24px 16px 40px;
+}
+h1{
+  margin:0 0 8px;
+  font-size:clamp(24px,6vw,36px);
+}
+.lead{
+  margin:0 0 20px;
+  color:var(--sub);
+}
+.panel{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:22px 16px;
+  box-shadow:0 8px 24px rgba(75,55,30,.08);
+}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin-bottom:12px;
+}
+.stat{
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:10px 4px;
+  background:#fffaf1;
+}
+.stat strong{
+  display:block;
+  font-size:22px;
+}
+.stat span{
+  color:var(--sub);
+  font-size:12px;
+}
+#mark{
+  min-height:170px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:clamp(100px,28vw,160px);
+  line-height:1;
+}
+#hint{
+  min-height:28px;
+  color:var(--sub);
+  margin:2px 0 18px;
+}
+#buttons{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+button{
+  appearance:none;
+  border:1px solid #bcae9d;
+  background:#fffaf1;
+  color:var(--text);
+  font-size:19px;
+  font-weight:700;
+  padding:14px 8px;
+  border-radius:14px;
+  min-height:56px;
+  cursor:pointer;
+}
+button:active{transform:scale(.98)}
+button:disabled{opacity:.6}
+#message{
+  min-height:36px;
+  margin-top:18px;
+  font-size:21px;
+  font-weight:700;
+}
+#detail{
+  min-height:25px;
+  color:var(--sub);
+}
+.actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:18px;
+}
+.secondary{
+  background:#f1eadf;
+}
+.danger{
+  background:#efe1dc;
+}
+.legend{
+  margin-top:18px;
+  text-align:left;
+  border-top:1px solid var(--line);
+  padding-top:16px;
+  color:var(--sub);
+  font-size:14px;
+  line-height:1.8;
+}
+@media (max-width:520px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  #buttons{grid-template-columns:1fr}
+  .actions{grid-template-columns:1fr}
+}
+</style>
+
+<style>
+.app-home{position:fixed;top:max(12px,env(safe-area-inset-top));left:12px;z-index:50;display:inline-flex;align-items:center;gap:6px;padding:9px 13px;border:1px solid rgba(120,100,75,.35);border-radius:999px;background:rgba(255,250,240,.9);backdrop-filter:blur(8px);color:#3a2d22;text-decoration:none;font:600 13px/1.2 "Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;box-shadow:0 5px 18px rgba(45,30,15,.12)}.app-home:hover{transform:translateY(-1px)}
+</style>
+</head>
+<body>
+<a class="app-home" href="../index.html" aria-label="目次へ戻る">← 目次</a>
+<main>
+  <h1>八卦マーク・エンドレスクイズ</h1>
+  <p class="lead">止めるまで何問でも続く八卦記号クイズ。</p>
+
+  <section class="panel">
+    <div class="stats">
+      <div class="stat"><strong id="total">0</strong><span>回答数</span></div>
+      <div class="stat"><strong id="correct">0</strong><span>正解数</span></div>
+      <div class="stat"><strong id="combo">0</strong><span>連続正解</span></div>
+      <div class="stat"><strong id="best">0</strong><span>最高コンボ</span></div>
+    </div>
+
+    <div id="mark">☰</div>
+    <div id="hint">この八卦はどれ？</div>
+    <div id="buttons"></div>
+    <div id="message"></div>
+    <div id="detail"></div>
+
+    <div class="actions">
+      <button class="secondary" onclick="resetStats()">記録をリセット</button>
+      <button class="danger" onclick="pauseGame()" id="pauseBtn">一時停止</button>
+    </div>
+
+    <div class="legend">
+      間違えた八卦は、しばらくすると再び出題されます。<br>
+      出題対象：☰ 乾／☷ 坤／☳ 震／☴ 巽／☵ 坎／☲ 離／☶ 艮／☱ 兌
+    </div>
+  </section>
+</main>
+
+<script>
+const data = [
+  {mark:"☰", name:"乾", yomi:"けん", nature:"天"},
+  {mark:"☷", name:"坤", yomi:"こん", nature:"地"},
+  {mark:"☳", name:"震", yomi:"しん", nature:"雷"},
+  {mark:"☴", name:"巽", yomi:"そん", nature:"風"},
+  {mark:"☵", name:"坎", yomi:"かん", nature:"水"},
+  {mark:"☲", name:"離", yomi:"り", nature:"火"},
+  {mark:"☶", name:"艮", yomi:"ごん", nature:"山"},
+  {mark:"☱", name:"兌", yomi:"だ", nature:"沢"}
+];
+
+let total = 0;
+let correct = 0;
+let combo = 0;
+let best = Number(localStorage.getItem("baguaBestCombo") || 0);
+let current = null;
+let previousName = "";
+let reviewQueue = [];
+let locked = false;
+let paused = false;
+
+function shuffle(array){
+  const copy = [...array];
+  for(let i = copy.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
+function makeChoices(correctAnswer){
+  const others = shuffle(data.filter(x => x.name !== correctAnswer.name)).slice(0,2);
+  return shuffle([correctAnswer, ...others]);
+}
+
+function chooseQuestion(){
+  if(reviewQueue.length && Math.random() < 0.45){
+    const q = reviewQueue.shift();
+    if(q.name !== previousName) return q;
+    reviewQueue.push(q);
+  }
+
+  const candidates = data.filter(x => x.name !== previousName);
+  return candidates[Math.floor(Math.random() * candidates.length)];
+}
+
+function updateStats(){
+  document.getElementById("total").textContent = total;
+  document.getElementById("correct").textContent = correct;
+  document.getElementById("combo").textContent = combo;
+  document.getElementById("best").textContent = best;
+}
+
+function showQuestion(){
+  if(paused) return;
+
+  locked = false;
+  current = chooseQuestion();
+  previousName = current.name;
+
+  document.getElementById("mark").textContent = current.mark;
+  document.getElementById("hint").textContent = "この八卦はどれ？";
+  document.getElementById("message").textContent = "";
+  document.getElementById("detail").textContent = "";
+
+  const buttons = document.getElementById("buttons");
+  buttons.innerHTML = "";
+
+  makeChoices(current).forEach(choice => {
+    const btn = document.createElement("button");
+    btn.textContent = `${choice.name}（${choice.yomi}）`;
+    btn.onclick = () => answer(choice);
+    buttons.appendChild(btn);
+  });
+}
+
+function answer(choice){
+  if(locked || paused) return;
+  locked = true;
+  total++;
+
+  document.querySelectorAll("#buttons button").forEach(btn => btn.disabled = true);
+
+  if(choice.name === current.name){
+    correct++;
+    combo++;
+    if(combo > best){
+      best = combo;
+      localStorage.setItem("baguaBestCombo", String(best));
+    }
+    document.getElementById("message").textContent =
+      combo >= 5 ? `🔥 ${combo}連続正解！` : "⭕ 正解";
+  } else {
+    combo = 0;
+    reviewQueue.push(current);
+    document.getElementById("message").textContent =
+      `❌ 正解は「${current.name}」`;
+  }
+
+  document.getElementById("detail").textContent =
+    `${current.mark} ${current.name}（${current.yomi}）＝ ${current.nature}`;
+
+  updateStats();
+  setTimeout(showQuestion, 950);
+}
+
+function resetStats(){
+  total = 0;
+  correct = 0;
+  combo = 0;
+  best = 0;
+  reviewQueue = [];
+  localStorage.removeItem("baguaBestCombo");
+  updateStats();
+  document.getElementById("message").textContent = "記録をリセットしました";
+  document.getElementById("detail").textContent = "";
+}
+
+function pauseGame(){
+  paused = !paused;
+  const btn = document.getElementById("pauseBtn");
+  const buttons = document.getElementById("buttons");
+
+  if(paused){
+    btn.textContent = "再開";
+    document.getElementById("mark").textContent = "⏸";
+    document.getElementById("hint").textContent = "一時停止中";
+    document.getElementById("message").textContent = "";
+    document.getElementById("detail").textContent = "";
+    buttons.innerHTML = "";
+  } else {
+    btn.textContent = "一時停止";
+    showQuestion();
+  }
+}
+
+updateStats();
+showQuestion();
+</script>
+
+<footer style="margin-top:40px;padding:24px;text-align:center;color:#666;font-size:14px;border-top:1px solid #ddd">
+<p>© 2026 りおくま</p>
+<p>企画・制作：りおくま</p>
+<p>制作協力：ChatGPT（OpenAI）</p>
+</footer>
+
+
+<div style="text-align:center;margin:24px 0 8px;font-size:13px"><a href="../about.html" style="color:#6f6255">このアプリについて</a></div>
+</body>
+</html>

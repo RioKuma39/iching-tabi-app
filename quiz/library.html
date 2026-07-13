@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#eee5d7">
+<title>八卦一覧・意味辞典</title>
+<style>
+:root{--bg:#f4eee3;--panel:#fffdf8;--ink:#2f2a25;--sub:#74695e;--line:#d8cbbb;--accent:#765d43;--soft:#eee3d4;--shadow:0 16px 40px rgba(70,50,30,.12)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif;color:var(--ink);background:radial-gradient(circle at 50% 0,#fffdf8 0,var(--bg) 55%,#e7dccb 100%)}
+a,button{-webkit-tap-highlight-color:transparent}.app-home{position:fixed;top:max(12px,env(safe-area-inset-top));left:12px;z-index:50;display:inline-flex;align-items:center;gap:6px;padding:9px 13px;border:1px solid rgba(120,100,75,.35);border-radius:999px;background:rgba(255,250,240,.92);backdrop-filter:blur(8px);color:#3a2d22;text-decoration:none;font:600 13px/1.2 "Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;box-shadow:0 5px 18px rgba(45,30,15,.12)}
+main{width:min(900px,94vw);margin:0 auto;padding:max(76px,env(safe-area-inset-top)) 0 max(50px,env(safe-area-inset-bottom))}.hero{text-align:center}.eyebrow{margin:0;color:var(--accent);font-size:13px;font-weight:800;letter-spacing:.16em}.hero h1{margin:8px 0 8px;font-size:clamp(30px,7vw,48px)}.lead{margin:0 auto 22px;max-width:620px;color:var(--sub);line-height:1.8}
+.selector{display:grid;grid-template-columns:repeat(8,1fr);gap:8px;margin:20px 0}.pick{border:1px solid var(--line);border-radius:14px;background:#fffaf1;padding:10px 4px;cursor:pointer;color:var(--ink);font:inherit}.pick .mark{display:block;font-size:30px;line-height:1.1}.pick .name{display:block;margin-top:4px;font-size:13px}.pick.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.viewer{display:grid;grid-template-columns:260px 1fr;gap:22px;align-items:start;padding:24px;border:1px solid var(--line);border-radius:24px;background:rgba(255,253,248,.95);box-shadow:var(--shadow)}.symbol-card{display:grid;place-items:center;min-height:310px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(180deg,#fbf6ed,#eee2d1);text-align:center}.big-mark{font-size:120px;line-height:1}.big-name{margin-top:10px;font-size:32px;font-weight:800}.big-yomi{margin-top:6px;color:var(--sub);font-size:18px}.detail{text-align:left}.detail h2{margin:0 0 4px;font-size:30px}.nature{color:var(--accent);font-weight:700}.section{margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}.section h3{margin:0 0 8px;font-size:16px;color:var(--sub)}.mean-list{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0}.mean-item{padding:12px;border:1px solid var(--line);border-radius:14px;background:#fffaf2}.mean-item dt{font-size:12px;color:var(--sub);font-weight:700}.mean-item dd{margin:4px 0 0;line-height:1.55;font-weight:700}.nav{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}.nav button{min-height:52px;border:1px solid var(--line);border-radius:14px;background:#fffaf1;color:var(--ink);font:700 16px/1.2 inherit;cursor:pointer}.nav button:hover,.pick:hover{transform:translateY(-1px)}
+.quick{display:flex;justify-content:center;align-items:center;gap:8px;margin:18px 0 0}.quick select{padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:#fffdf8;font:inherit}.quick button{padding:10px 16px;border:1px solid var(--line);border-radius:12px;background:var(--soft);font:700 14px/1.2 inherit;cursor:pointer}
+@media(max-width:760px){.selector{grid-template-columns:repeat(4,1fr)}.viewer{grid-template-columns:1fr}.symbol-card{min-height:240px}.big-mark{font-size:100px}.mean-list{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<a class="app-home" href="../index.html">← 目次</a>
+<main>
+  <header class="hero">
+    <p class="eyebrow">BAGUA REFERENCE</p>
+    <h1>八卦一覧・意味辞典</h1>
+    <p class="lead">乾・坤・震・巽・坎・離・艮・兌を順番に見たり、記号や名前を選んで直接確認できます。</p>
+  </header>
+  <div class="selector" id="selector"></div>
+  <div class="quick">
+    <label for="jump">直接選択</label>
+    <select id="jump"></select>
+    <button type="button" onclick="jumpToSelected()">表示</button>
+  </div>
+  <section class="viewer" aria-live="polite">
+    <div class="symbol-card">
+      <div>
+        <div class="big-mark" id="bigMark"></div>
+        <div class="big-name" id="bigName"></div>
+        <div class="big-yomi" id="bigYomi"></div>
+      </div>
+    </div>
+    <div class="detail">
+      <h2 id="title"></h2>
+      <div class="nature" id="nature"></div>
+      <div class="section">
+        <h3>主な意味</h3>
+        <dl class="mean-list" id="meanList"></dl>
+      </div>
+      <div class="section">
+        <h3>覚え方</h3>
+        <p id="memo" style="margin:0;line-height:1.8"></p>
+      </div>
+      <div class="nav">
+        <button type="button" onclick="move(-1)">← 前の八卦</button>
+        <button type="button" onclick="move(1)">次の八卦 →</button>
+      </div>
+    </div>
+  </section>
+</main>
+<script>
+const bagua=[
+{mark:"☰",name:"乾",yomi:"けん",nature:"天",memo:"三本すべてが陽爻。天の力、創造、父、指導性を表します。",meanings:[
+["中心的な性質","創造する力"],["動き","力強く前へ進む"],["人物像","父・指導者・責任者"],["年齢・性別","50代以上の男性"],["身体部位","頭・脳・骨"],["連想語","始まり・意志・健やかさ"]]},
+{mark:"☷",name:"坤",yomi:"こん",nature:"地",memo:"三本すべてが陰爻。大地の受容、母、養育、支える力を表します。",meanings:[
+["中心的な性質","受け入れ、育てる"],["動き","支えながら従う"],["人物像","母・養育する人・支える人"],["年齢・性別","50代以上の女性"],["身体部位","腹部・胃・筋肉"],["連想語","受容・大地・柔順"]]},
+{mark:"☳",name:"震",yomi:"しん",nature:"雷",memo:"下の一本だけが陽爻。地の下から雷が動き出すような、発動と驚きを表します。",meanings:[
+["中心的な性質","動き始める"],["動き","突然の変化を起こす"],["人物像","長男・先頭に立つ人"],["年齢・性別","30〜40代の男性"],["身体部位","足・肝臓・神経"],["連想語","雷・驚き・発動"]]},
+{mark:"☴",name:"巽",yomi:"そん",nature:"風",memo:"下の一本だけが陰爻。風のように柔らかく入り込み、少しずつ浸透します。",meanings:[
+["中心的な性質","柔らかく入り込む"],["動き","少しずつ浸透する"],["人物像","長女・調整する人"],["年齢・性別","30〜40代の女性"],["身体部位","太もも・股関節・呼吸器"],["連想語","風・伝達・従順"]]},
+{mark:"☵",name:"坎",yomi:"かん",nature:"水",memo:"中央だけが陽爻。水や深い穴のような危険、試練、内側の信念を表します。",meanings:[
+["中心的な性質","危険の中を進む"],["動き","深い場所へ落ち込む"],["人物像","中男・試練を経験する人"],["年齢・性別","20〜30代の男性"],["身体部位","耳・腎臓・泌尿器"],["連想語","水・困難・深さ"]]},
+{mark:"☲",name:"離",yomi:"り",nature:"火",memo:"中央だけが陰爻。火が何かに付いて燃えるように、光、知性、付着を表します。",meanings:[
+["中心的な性質","明らかにし、照らす"],["動き","何かに付着して燃える"],["人物像","中女・知性を使う人"],["年齢・性別","20〜30代の女性"],["身体部位","目・心臓・血液"],["連想語","火・明知・美しさ"]]},
+{mark:"☶",name:"艮",yomi:"ごん",nature:"山",memo:"上の一本だけが陽爻。山のように止まり、境界をつくり、区切る働きを表します。",meanings:[
+["中心的な性質","止まり、境界を作る"],["動き","今いる場所で静止する"],["人物像","少男・区切りをつける人"],["年齢・性別","10代〜20代前半の男性"],["身体部位","手・指・背中・鼻"],["連想語","山・停止・節度"]]},
+{mark:"☱",name:"兌",yomi:"だ",nature:"沢",memo:"上の一本だけが陰爻。沢のような喜び、会話、交流、口の働きを表します。",meanings:[
+["中心的な性質","喜び、交流する"],["動き","言葉や笑顔で和らげる"],["人物像","少女・楽しませる人"],["年齢・性別","10代〜20代前半の女性"],["身体部位","口・舌・歯・肺"],["連想語","沢・喜悦・会話"]]}
+];
+let current=0;
+const selector=document.getElementById('selector'),jump=document.getElementById('jump');
+bagua.forEach((b,i)=>{
+  const btn=document.createElement('button');btn.className='pick';btn.type='button';btn.innerHTML=`<span class="mark">${b.mark}</span><span class="name">${b.name}</span>`;btn.onclick=()=>show(i);selector.appendChild(btn);
+  const opt=document.createElement('option');opt.value=i;opt.textContent=`${i+1}. ${b.mark} ${b.name}（${b.yomi}）`;jump.appendChild(opt);
+});
+function show(i){current=(i+bagua.length)%bagua.length;const b=bagua[current];
+ document.querySelectorAll('.pick').forEach((el,n)=>el.classList.toggle('active',n===current));
+ jump.value=current;bigMark.textContent=b.mark;bigName.textContent=b.name;bigYomi.textContent=b.yomi;title.textContent=`${current+1}. ${b.name}（${b.yomi}）`;nature.textContent=`自然象：${b.nature}`;memo.textContent=b.memo;
+ meanList.innerHTML='';b.meanings.forEach(([k,v])=>{const box=document.createElement('div');box.className='mean-item';box.innerHTML=`<dt>${k}</dt><dd>${v}</dd>`;meanList.appendChild(box)});
+ history.replaceState(null,'',`#${current+1}`);
+}
+function move(step){show(current+step)}
+function jumpToSelected(){show(Number(jump.value))}
+const hash=Number(location.hash.replace('#',''));show(Number.isInteger(hash)&&hash>=1&&hash<=8?hash-1:0);
+</script>
+
+<footer style="margin-top:40px;padding:24px;text-align:center;color:#666;font-size:14px;border-top:1px solid #ddd">
+<p>© 2026 りおくま</p>
+<p>企画・制作：りおくま</p>
+<p>制作協力：ChatGPT（OpenAI）</p>
+</footer>
+
+
+<div style="text-align:center;margin:24px 0 8px;font-size:13px"><a href="../about.html" style="color:#6f6255">このアプリについて</a></div>
+</body>
+</html>

@@ -188,11 +188,97 @@ button:hover,.toggle:hover{
 .close{
   margin-top:20px;
 }
+
+.theme-panel{
+  width:min(760px,96%);
+  margin:18px auto 22px;
+  padding:20px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:rgba(255,250,240,.72);
+  box-shadow:0 8px 24px rgba(70,48,25,.08);
+}
+.theme-question{
+  margin:0 0 14px;
+  font-size:18px;
+  letter-spacing:.06em;
+}
+.theme-options{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+}
+.theme-option{
+  position:relative;
+  display:block;
+  cursor:pointer;
+}
+.theme-option input{
+  position:absolute;
+  opacity:0;
+  pointer-events:none;
+}
+.theme-option span{
+  display:block;
+  padding:11px 8px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:#fffaf0;
+  transition:.15s ease;
+  font-size:16px;
+}
+.theme-option input:checked + span{
+  border-color:#8f7556;
+  background:#e9dcc4;
+  box-shadow:inset 0 0 0 1px #8f7556,0 5px 12px rgba(70,48,25,.12);
+  font-weight:600;
+}
+.result-section{
+  padding:15px 0;
+  border-top:1px solid var(--line);
+}
+.result-section:first-of-type{border-top:0}
+.result-heading{
+  margin:0 0 8px!important;
+  color:var(--ink)!important;
+  font-size:18px!important;
+  font-weight:600!important;
+}
+.modal-yomi{
+  display:block;
+  margin-top:4px;
+  color:var(--sub);
+  font-size:15px;
+  font-weight:400;
+}
+.iching-details{
+  margin-top:12px;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+.iching-details summary{
+  cursor:pointer;
+  padding:15px 2px;
+  font-size:17px;
+  font-weight:600;
+  list-style:none;
+}
+.iching-details summary::-webkit-details-marker{display:none}
+.iching-details summary::after{content:'＋';float:right;color:var(--sub)}
+.iching-details[open] summary::after{content:'−'}
+.iching-details p{padding:0 2px 16px}
+.iching-content{padding:4px 2px 2px}
+.iching-block{padding:14px 0;border-top:1px solid rgba(216,200,173,.72)}
+.iching-block:first-child{border-top:0}
+.iching-block h3{margin:0 0 7px;color:var(--ink);font-size:16px;font-weight:600}
+.iching-block p{padding:0;margin:0;line-height:1.85}
 @media(max-width:760px){
   .modal-grid{grid-template-columns:1fr}
   .slot{width:220px}
   .card img{width:220px}
   .row{gap:28px}
+  .theme-options{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .theme-panel{padding:16px}
 }
 </style>
 
@@ -204,12 +290,24 @@ button:hover,.toggle:hover{
 <a class="app-home" href="../index.html" aria-label="目次へ戻る">← 目次</a>
 <div class="wrap">
   <h1>イーチン旅タロット</h1>
-  <div class="subtitle">旅人の一枚引き・三枚引き</div>
+  <div class="subtitle">64枚でたどる、旅人の物語</div>
+
+  <section class="theme-panel" aria-labelledby="themeQuestion">
+    <p class="theme-question" id="themeQuestion">🔮 今回は何について占いますか？</p>
+    <div class="theme-options">
+      <label class="theme-option"><input type="radio" name="readingTheme" value="general" checked><span>🌏 総合</span></label>
+      <label class="theme-option"><input type="radio" name="readingTheme" value="love"><span>💕 恋愛</span></label>
+      <label class="theme-option"><input type="radio" name="readingTheme" value="work"><span>💼 仕事</span></label>
+      <label class="theme-option"><input type="radio" name="readingTheme" value="relationship"><span>👥 人間関係</span></label>
+      <label class="theme-option"><input type="radio" name="readingTheme" value="money"><span>💰 お金</span></label>
+      <label class="theme-option"><input type="radio" name="readingTheme" value="health"><span>🍀 健康</span></label>
+    </div>
+  </section>
 
   <div class="controls">
-    <button onclick="location.href='library.html'">64卦一覧・意味を見る</button>
     <button onclick="draw(1)">一枚引き</button>
     <button onclick="draw(3)">三枚引き</button>
+    <button onclick="location.href='library.html'">64卦一覧</button>
     <label class="toggle"><input type="checkbox" id="reverseMode">逆位置を使う</label>
   </div>
 
@@ -226,22 +324,49 @@ button:hover,.toggle:hover{
       <div class="modal-text">
         <h2 id="modalTitle"></h2>
         <p id="modalReverse"></p>
-        <h3>テーマ</h3>
-        <p id="modalTheme"></p>
-        <h3>キーワード</h3>
-        <p id="modalKeywords"></p>
-        <h3>一言メッセージ</h3>
-        <p id="modalOneLine"></p>
-        <h3>物語</h3>
-        <p id="modalStory"></p>
-        <h3>リーディングメッセージ</h3>
-        <p id="modalMessage"></p>
-        <h3>アドバイス</h3>
-        <p id="modalAdvice"></p>
-        <h3>卦の構造</h3>
-        <p id="modalClassic"></p>
-        <h3>ジャンル別</h3>
-        <p id="modalMeanings"></p>
+
+        <section class="result-section">
+          <h3 class="result-heading">【旅の物語】</h3>
+          <p id="modalStory"></p>
+        </section>
+
+        <section class="result-section">
+          <h3 class="result-heading">【このカードのテーマ】</h3>
+          <p id="modalTheme"></p>
+        </section>
+
+        <section class="result-section">
+          <h3 class="result-heading">【今回のメッセージ】</h3>
+          <p id="modalMessage"></p>
+        </section>
+
+        <section class="result-section" id="selectedReadingSection">
+          <h3 class="result-heading" id="selectedReadingTitle"></h3>
+          <p id="selectedReadingText"></p>
+        </section>
+
+        <details class="iching-details">
+          <summary>易経ではどう読む？</summary>
+          <div class="iching-content">
+            <section class="iching-block">
+              <h3 id="ichingUpperTitle"></h3>
+              <p id="ichingUpperText"></p>
+            </section>
+            <section class="iching-block">
+              <h3 id="ichingLowerTitle"></h3>
+              <p id="ichingLowerText"></p>
+            </section>
+            <section class="iching-block">
+              <h3>この卦が示すもの</h3>
+              <p id="ichingCombination"></p>
+            </section>
+            <section class="iching-block">
+              <h3>易経の学び</h3>
+              <p id="ichingLesson"></p>
+            </section>
+          </div>
+        </details>
+
         <button class="close" onclick="forceCloseModal()">閉じる</button>
       </div>
     </div>
@@ -353,10 +478,17 @@ function textOrBlank(value){
   return value || "";
 }
 
-function meaningsText(meanings){
-  if(!meanings) return "";
-  const labels = {work:"仕事", love:"恋愛", relationship:"人間関係", money:"お金", health:"体調"};
-  return Object.entries(meanings).map(([k,v])=>`${labels[k] || k}：${v}`).join("\n");
+const readingThemes = {
+  general: {label:"🌏 総合リーディング", key:null},
+  love: {label:"💕 恋愛リーディング", key:"love"},
+  work: {label:"💼 仕事リーディング", key:"work"},
+  relationship: {label:"👥 人間関係リーディング", key:"relationship"},
+  money: {label:"💰 お金リーディング", key:"money"},
+  health: {label:"🍀 健康リーディング", key:"health"}
+};
+
+function selectedTheme(){
+  return document.querySelector('input[name="readingTheme"]:checked')?.value || "general";
 }
 
 function openModal(no,reversed){
@@ -364,21 +496,41 @@ function openModal(no,reversed){
   if(!c) return;
   const modal=document.getElementById("modal");
   const img=document.getElementById("modalImg");
+  const themeKey=selectedTheme();
+  const themeInfo=readingThemes[themeKey];
+
   img.src=cardImagePath(c.no);
   img.loading="eager";
   img.decoding="async";
   img.className=reversed ? "reversed" : "";
-  document.getElementById("modalTitle").textContent=`${c.no}　${c.name} ${c.yomi ? "（"+c.yomi+"）" : ""}`;
-  document.getElementById("modalReverse").textContent=reversed ? "逆位置：意味を弱める・偏る・内面化する読みとして扱います。" : "正位置";
-  document.getElementById("modalTheme").textContent=textOrBlank(c.theme);
-  document.getElementById("modalKeywords").textContent=textOrBlank(c.keywords);
-  document.getElementById("modalOneLine").textContent=textOrBlank(c.oneLine);
+  img.onerror=()=>{ img.onerror=null; img.src=CARD_PLACEHOLDER; };
+
+  document.getElementById("modalTitle").innerHTML=`${c.no}　${c.name}<span class="modal-yomi">${c.yomi || ""}</span>`;
+  document.getElementById("modalReverse").textContent=reversed ? "逆位置として、意味の弱まり・偏り・内面化も含めて読みます。" : "";
   document.getElementById("modalStory").textContent=textOrBlank(c.story);
-  document.getElementById("modalMessage").textContent=textOrBlank(c.message);
-  document.getElementById("modalAdvice").textContent=textOrBlank(c.advice);
-  document.getElementById("modalClassic").textContent=textOrBlank(c.classicNote);
-  document.getElementById("modalMeanings").textContent=meaningsText(c.meanings);
+  document.getElementById("modalTheme").textContent=textOrBlank(c.theme);
+  document.getElementById("modalMessage").textContent=textOrBlank(c.message || c.oneLine);
+  const selectedSection=document.getElementById("selectedReadingSection");
+  if(themeInfo.key){
+    selectedSection.hidden=false;
+    document.getElementById("selectedReadingTitle").textContent=themeInfo.label;
+    document.getElementById("selectedReadingText").textContent=textOrBlank(c.meanings?.[themeInfo.key]);
+  }else{
+    selectedSection.hidden=true;
+    document.getElementById("selectedReadingTitle").textContent="";
+    document.getElementById("selectedReadingText").textContent="";
+  }
+
+  document.getElementById("ichingUpperTitle").textContent=`上卦：${c.upper?.name || ""}（${c.upper?.nature || ""}）${c.upper?.symbol || ""}`;
+  document.getElementById("ichingUpperText").textContent=textOrBlank(c.iching?.upperExplanation);
+  document.getElementById("ichingLowerTitle").textContent=`下卦：${c.lower?.name || ""}（${c.lower?.nature || ""}）${c.lower?.symbol || ""}`;
+  document.getElementById("ichingLowerText").textContent=textOrBlank(c.iching?.lowerExplanation);
+  document.getElementById("ichingCombination").textContent=textOrBlank(c.iching?.combination);
+  document.getElementById("ichingLesson").textContent=textOrBlank(c.iching?.lesson);
+
+  modal.querySelector("details").open=false;
   modal.classList.add("open");
+  document.body.style.overflow="hidden";
 }
 
 function closeModal(e){
@@ -386,9 +538,12 @@ function closeModal(e){
 }
 function forceCloseModal(){
   document.getElementById("modal").classList.remove("open");
+  document.body.style.overflow="";
 }
 
 // トップページから ?draw=1 または ?draw=3 で開いた場合は自動でカードを引く
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") forceCloseModal(); });
+
 const requestedDraw = Number(new URLSearchParams(location.search).get("draw"));
 if(requestedDraw === 1 || requestedDraw === 3){
   window.addEventListener("DOMContentLoaded",()=>draw(requestedDraw));

@@ -13,15 +13,25 @@ a{color:inherit}.wrap{width:min(1180px,94vw);margin:0 auto;padding:max(76px,calc
 header{text-align:center;margin-bottom:24px}h1{margin:0 0 8px;font-size:clamp(30px,5vw,48px);font-weight:500;letter-spacing:.09em}.lead{margin:0;color:var(--sub);line-height:1.8}
 .layout{display:grid;grid-template-columns:minmax(270px,390px) minmax(0,1fr);gap:30px;align-items:start}.viewer{position:sticky;top:74px}.imagebox{position:relative;aspect-ratio:2/3;border-radius:20px;overflow:hidden;background:linear-gradient(145deg,#fffaf0,#e3d6bf);box-shadow:0 20px 48px var(--shadow)}.imagebox img{width:100%;height:100%;object-fit:cover;display:block}.missing{position:absolute;inset:0;display:none;place-items:center;padding:30px;text-align:center;color:var(--sub);line-height:1.8;background:linear-gradient(145deg,#fffaf0,#e6dac6)}
 .pager{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin-top:14px}.pager button,.jump button{font-family:inherit;border:1px solid var(--line);background:linear-gradient(180deg,#fffaf0,#eadfc9);color:var(--ink);border-radius:10px;padding:11px 15px;font-size:15px;cursor:pointer;box-shadow:0 4px 12px rgba(70,48,25,.1)}.pager button:last-child{justify-self:end}.counter{color:var(--sub);white-space:nowrap}.pager button:disabled{opacity:.4;cursor:not-allowed}
-.details{background:rgba(255,250,240,.78);border:1px solid var(--line);border-radius:22px;padding:clamp(20px,4vw,34px);box-shadow:0 15px 38px rgba(54,38,20,.1)}.title{margin:0;font-size:clamp(28px,4vw,40px);font-weight:500}.yomi{margin:5px 0 18px;color:var(--sub);font-size:17px}.section{padding:17px 0;border-top:1px solid rgba(216,200,173,.75)}.section:first-of-type{border-top:0}.section h2{margin:0 0 7px;color:var(--sub);font-size:15px;font-weight:500;letter-spacing:.08em}.section p{margin:0;line-height:1.9;white-space:pre-line}.one{font-size:20px}.keywords{display:flex;flex-wrap:wrap;gap:8px}.chip{padding:7px 11px;border:1px solid var(--line);border-radius:999px;background:#fffaf0;font-size:14px}.meanings{display:grid;gap:10px}.meaning{padding:12px 14px;border-radius:12px;background:rgba(244,239,227,.7);line-height:1.7}.meaning strong{display:block;margin-bottom:3px;color:var(--sub);font-size:13px}
+.details{background:rgba(255,250,240,.78);border:1px solid var(--line);border-radius:22px;padding:clamp(20px,4vw,34px);box-shadow:0 15px 38px rgba(54,38,20,.1)}.title{margin:0;font-size:clamp(28px,4vw,40px);font-weight:500}.yomi{margin:5px 0 18px;color:var(--sub);font-size:17px}.section{padding:17px 0;border-top:1px solid rgba(216,200,173,.75)}.section:first-of-type{border-top:0}.section h2{margin:0 0 7px;color:var(--sub);font-size:15px;font-weight:500;letter-spacing:.08em}.section p{margin:0;line-height:1.9;white-space:pre-line}.one{font-size:20px}.keywords{display:flex;flex-wrap:wrap;gap:8px}.chip{padding:7px 11px;border:1px solid var(--line);border-radius:999px;background:#fffaf0;font-size:14px}.meanings{display:grid;gap:10px}.meaning{padding:12px 14px;border-radius:12px;background:rgba(244,239,227,.7);line-height:1.7}.meaning strong{display:block;margin-bottom:3px;color:var(--sub);font-size:13px}.iching-library summary{cursor:pointer;font-size:17px;font-weight:600;list-style:none}.iching-library summary::-webkit-details-marker{display:none}.iching-library summary::after{content:"＋";float:right;color:var(--sub)}.iching-library[open] summary::after{content:"−"}.iching-library-content{padding-top:16px}.iching-library-content h2{margin:18px 0 7px;color:var(--ink);font-size:15px;font-weight:600}.iching-library-content h2:first-child{margin-top:0}
 .indexpanel{margin-top:34px;padding:22px;border:1px solid var(--line);border-radius:22px;background:rgba(255,250,240,.68)}.indexpanel h2{margin:0 0 7px;font-size:23px;font-weight:500}.indexpanel p{margin:0 0 16px;color:var(--sub)}.numbergrid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px}.numbergrid button{min-height:48px;border:1px solid var(--line);border-radius:10px;background:#fffaf0;font-family:inherit;color:var(--ink);cursor:pointer;padding:5px 2px}.numbergrid button:hover,.numbergrid button.active{background:var(--accent);color:#fff;border-color:var(--accent)}.numbergrid small{display:block;font-size:9px;opacity:.8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 2px}.jump{display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap;margin:18px 0 0}.jump input{width:88px;border:1px solid var(--line);border-radius:10px;padding:11px;font:inherit;background:#fffaf0;color:var(--ink);text-align:center}
-@media(max-width:820px){.layout{grid-template-columns:1fr}.viewer{position:static;width:min(360px,88vw);margin:0 auto}.numbergrid{grid-template-columns:repeat(4,minmax(0,1fr))}.details{margin-top:0}}
+.modepanel{margin:0 auto 28px;padding:18px;border:1px solid var(--line);border-radius:20px;background:rgba(255,250,240,.72);box-shadow:0 10px 28px rgba(54,38,20,.08)}.mode-title{text-align:center;color:var(--sub);font-size:14px;letter-spacing:.08em;margin-bottom:12px}.mode-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.mode-btn{border:1px solid var(--line);border-radius:14px;background:#fffaf0;color:var(--ink);font-family:inherit;padding:13px 10px;cursor:pointer;display:grid;gap:4px;text-align:center}.mode-btn span{font-size:16px}.mode-btn small{font-size:12px;color:var(--sub)}.mode-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}.mode-btn.active small{color:rgba(255,255,255,.82)}.mode-note{text-align:center;color:var(--sub);font-size:14px;margin:12px 0 0;line-height:1.7}.mode-hidden{display:none!important}.beginner-intro{font-size:14px;color:var(--sub);margin:0 0 14px;line-height:1.8}.details[data-mode="beginner"] .title{font-size:clamp(30px,5vw,44px)}.details[data-mode="beginner"] #story{font-size:18px;line-height:2.05}.details[data-mode="beginner"] .story-section h2{color:var(--accent);font-size:16px}
+@media(max-width:820px){.mode-tabs{grid-template-columns:1fr}.layout{grid-template-columns:1fr}.viewer{position:static;width:min(360px,88vw);margin:0 auto}.numbergrid{grid-template-columns:repeat(4,minmax(0,1fr))}.details{margin-top:0}}
 </style>
 </head>
 <body>
 <nav class="topnav"><a href="../index.html">← 目次</a><a href="index.html">カードを引く</a></nav>
 <main class="wrap">
-<header><h1>64卦カード一覧</h1><p class="lead">前へ・次へで順番に読むか、下の番号から見たいカードを直接選べます。</p></header>
+<header><h1>64卦カード図鑑</h1><p class="lead">読み方を選んで、旅の物語から易経の仕組みまで段階的に楽しめます。</p></header>
+<section class="modepanel" aria-label="図鑑の読み方">
+  <div class="mode-title">読み方を選ぶ</div>
+  <div class="mode-tabs" role="tablist">
+    <button type="button" class="mode-btn active" data-mode="beginner" role="tab" aria-selected="true"><span>🌱 初心者</span><small>旅の物語だけ読む</small></button>
+    <button type="button" class="mode-btn" data-mode="intermediate" role="tab" aria-selected="false"><span>🔮 中級者</span><small>意味とジャンル別解釈</small></button>
+    <button type="button" class="mode-btn" data-mode="study" role="tab" aria-selected="false"><span>📖 学習</span><small>易経の構造まで学ぶ</small></button>
+  </div>
+  <p class="mode-note" id="modeNote">カードの絵と旅の物語を、順番に楽しむモードです。</p>
+</section>
 <section class="layout">
   <div class="viewer">
     <div class="imagebox"><img id="cardImg" alt=""><div class="missing" id="missing">カード画像は準備中です。<br>意味と物語は右側で読めます。</div></div>
@@ -29,14 +39,19 @@ header{text-align:center;margin-bottom:24px}h1{margin:0 0 8px;font-size:clamp(30
   </div>
   <article class="details" aria-live="polite">
     <h2 class="title" id="title"></h2><p class="yomi" id="yomi"></p>
-    <section class="section"><h2>一言メッセージ</h2><p class="one" id="oneLine"></p></section>
-    <section class="section"><h2>物語</h2><p id="story"></p></section>
-    <section class="section"><h2>テーマ</h2><p id="theme"></p></section>
-    <section class="section"><h2>易経キーワード</h2><div class="keywords" id="keywords"></div></section>
-    <section class="section"><h2>リーディングメッセージ</h2><p id="message"></p></section>
-    <section class="section"><h2>アドバイス</h2><p id="advice"></p></section>
-    <section class="section"><h2>八卦の組み合わせ</h2><p id="structure"></p></section>
-    <section class="section"><h2>ジャンル別</h2><div class="meanings" id="meanings"></div></section>
+    <p class="beginner-intro" id="beginnerIntro">64枚でつながる旅の一場面です。</p><section class="section story-section"><h2>旅の物語</h2><p id="story"></p></section>
+    <section class="section intermediate-section"><h2>テーマ</h2><p id="theme"></p></section>
+    <section class="section intermediate-section"><h2>リーディングメッセージ</h2><p id="message"></p></section>
+    <section class="section genre-section"><h2>ジャンル別リーディング</h2><div class="meanings" id="meanings"></div></section>
+    <details class="section iching-library study-section">
+      <summary>易経ではどう読む？</summary>
+      <div class="iching-library-content">
+        <h2 id="upperTitle"></h2><p id="upperText"></p>
+        <h2 id="lowerTitle"></h2><p id="lowerText"></p>
+        <h2>この卦が示すもの</h2><p id="combination"></p>
+        <h2>易経の学び</h2><p id="lesson"></p>
+      </div>
+    </details>
   </article>
 </section>
 <section class="indexpanel" id="index"><h2>番号から選ぶ</h2><p>1〜64の番号を押すと、そのカードを表示します。</p><div class="numbergrid" id="numberGrid"></div><div class="jump"><label for="jumpNo">番号を入力</label><input id="jumpNo" type="number" min="1" max="64" inputmode="numeric" placeholder="1〜64"><button id="jumpBtn" type="button">表示</button></div></section>
@@ -49,12 +64,56 @@ header{text-align:center;margin-bottom:24px}h1{margin:0 0 8px;font-size:clamp(30
     return;
   }
   const labels={work:"仕事",love:"恋愛",relationship:"人間関係",money:"お金",health:"体調"};
-  const els={img:document.getElementById("cardImg"),missing:document.getElementById("missing"),counter:document.getElementById("counter"),title:document.getElementById("title"),yomi:document.getElementById("yomi"),oneLine:document.getElementById("oneLine"),story:document.getElementById("story"),theme:document.getElementById("theme"),keywords:document.getElementById("keywords"),message:document.getElementById("message"),advice:document.getElementById("advice"),structure:document.getElementById("structure"),meanings:document.getElementById("meanings"),prev:document.getElementById("prevBtn"),next:document.getElementById("nextBtn"),grid:document.getElementById("numberGrid"),jumpNo:document.getElementById("jumpNo")};
+  const els={img:document.getElementById("cardImg"),missing:document.getElementById("missing"),counter:document.getElementById("counter"),title:document.getElementById("title"),yomi:document.getElementById("yomi"),story:document.getElementById("story"),theme:document.getElementById("theme"),message:document.getElementById("message"),meanings:document.getElementById("meanings"),upperTitle:document.getElementById("upperTitle"),upperText:document.getElementById("upperText"),lowerTitle:document.getElementById("lowerTitle"),lowerText:document.getElementById("lowerText"),combination:document.getElementById("combination"),lesson:document.getElementById("lesson"),prev:document.getElementById("prevBtn"),next:document.getElementById("nextBtn"),grid:document.getElementById("numberGrid"),jumpNo:document.getElementById("jumpNo")};
   let current=0;
+  let mode=localStorage.getItem("ichingLibraryMode")||"beginner";
+  const modeNotes={
+    beginner:"カードの絵と旅の物語を、順番に楽しむモードです。",
+    intermediate:"旅の物語に加えて、テーマ・総合メッセージ・ジャンル別の意味を読めます。",
+    study:"旅の物語と総合的な意味に加えて、上下の八卦・組み合わせ・易経の学びを確認できます。"
+  };
+  function applyMode(nextMode){
+    mode=["beginner","intermediate","study"].includes(nextMode)?nextMode:"beginner";
+    localStorage.setItem("ichingLibraryMode",mode);
+    document.querySelector(".details").dataset.mode=mode;
+    document.querySelectorAll(".intermediate-section").forEach(el=>el.classList.toggle("mode-hidden",mode==="beginner"));
+    document.querySelectorAll(".study-section").forEach(el=>el.classList.toggle("mode-hidden",mode!=="study"));
+    document.querySelectorAll(".genre-section").forEach(el=>el.classList.toggle("mode-hidden",mode!=="intermediate"));
+    document.getElementById("beginnerIntro").classList.toggle("mode-hidden",mode!=="beginner");
+    document.getElementById("modeNote").textContent=modeNotes[mode];
+    document.querySelectorAll(".mode-btn").forEach(btn=>{
+      const active=btn.dataset.mode===mode;
+      btn.classList.toggle("active",active);
+      btn.setAttribute("aria-selected",String(active));
+    });
+  }
+  document.querySelectorAll(".mode-btn").forEach(btn=>btn.addEventListener("click",()=>applyMode(btn.dataset.mode)));
+  applyMode(mode);
   function imagePath(card){return `cards/${card.no}.webp`;}
   function showImage(card){els.missing.style.display="none";els.img.style.display="block";els.img.src=imagePath(card);els.img.alt=`${card.no} ${card.name}`;els.img.onerror=()=>{els.img.style.display="none";els.missing.style.display="grid";};}
   function renderMeanings(meanings){els.meanings.innerHTML="";Object.entries(meanings||{}).forEach(([key,value])=>{const div=document.createElement("div");div.className="meaning";const strong=document.createElement("strong");strong.textContent=labels[key]||key;const text=document.createElement("span");text.textContent=value||"";div.append(strong,text);els.meanings.appendChild(div);});}
-  function render(index,push=true){current=Math.max(0,Math.min(cards.length-1,index));const c=cards[current];showImage(c);els.counter.textContent=`${current+1} / ${cards.length}`;els.title.textContent=`${c.no}　${c.name}`;els.yomi.textContent=c.yomi?`（${c.yomi}）`:"";els.oneLine.textContent=c.oneLine||"";els.story.textContent=c.story||"";els.theme.textContent=c.theme||"";els.keywords.innerHTML="";(c.keywords||[]).forEach(k=>{const span=document.createElement("span");span.className="chip";span.textContent=k;els.keywords.appendChild(span);});els.message.textContent=c.message||"";els.advice.textContent=c.advice||"";els.structure.textContent=c.classicNote||"";renderMeanings(c.meanings);els.prev.disabled=current===0;els.next.disabled=current===cards.length-1;document.querySelectorAll(".numbergrid button").forEach((b,i)=>b.classList.toggle("active",i===current));if(push){const url=new URL(location.href);url.searchParams.set("no",String(current+1));history.replaceState(null,"",url);}}
+  function render(index,push=true){
+    current=Math.max(0,Math.min(cards.length-1,index));
+    const c=cards[current];
+    showImage(c);
+    els.counter.textContent=`${current+1} / ${cards.length}`;
+    els.title.textContent=`${c.no}　${c.name}`;
+    els.yomi.textContent=c.yomi?`（${c.yomi}）`:"";
+    els.story.textContent=c.story||"";
+    els.theme.textContent=c.theme||"";
+    els.message.textContent=c.message||"";
+    renderMeanings(c.meanings);
+    els.upperTitle.textContent=`上卦：${c.upper?.name||""}（${c.upper?.nature||""}）${c.upper?.symbol||""}`;
+    els.upperText.textContent=c.iching?.upperExplanation||"";
+    els.lowerTitle.textContent=`下卦：${c.lower?.name||""}（${c.lower?.nature||""}）${c.lower?.symbol||""}`;
+    els.lowerText.textContent=c.iching?.lowerExplanation||"";
+    els.combination.textContent=c.iching?.combination||"";
+    els.lesson.textContent=c.iching?.lesson||"";
+    els.prev.disabled=current===0;
+    els.next.disabled=current===cards.length-1;
+    document.querySelectorAll(".numbergrid button").forEach((b,i)=>b.classList.toggle("active",i===current));
+    if(push){const url=new URL(location.href);url.searchParams.set("no",String(current+1));history.replaceState(null,"",url);}
+  }
   cards.forEach((c,i)=>{const b=document.createElement("button");b.type="button";b.innerHTML=`<strong>${Number(c.no)}</strong><small>${c.name}</small>`;b.addEventListener("click",()=>{render(i);window.scrollTo({top:0,behavior:"smooth"});});els.grid.appendChild(b);});
   els.prev.addEventListener("click",()=>render(current-1));els.next.addEventListener("click",()=>render(current+1));document.getElementById("jumpBtn").addEventListener("click",()=>{const n=Number(els.jumpNo.value);if(Number.isInteger(n)&&n>=1&&n<=cards.length){render(n-1);window.scrollTo({top:0,behavior:"smooth"});}else{els.jumpNo.focus();}});els.jumpNo.addEventListener("keydown",e=>{if(e.key==="Enter")document.getElementById("jumpBtn").click();});document.addEventListener("keydown",e=>{if(e.key==="ArrowLeft"&&current>0)render(current-1);if(e.key==="ArrowRight"&&current<cards.length-1)render(current+1);});
   const requested=Number(new URLSearchParams(location.search).get("no"));render(Number.isInteger(requested)&&requested>=1&&requested<=cards.length?requested-1:0,false);

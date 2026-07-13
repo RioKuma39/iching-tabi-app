@@ -6,7 +6,13 @@
 <meta name="theme-color" content="#efe6d4">
 <title>このアプリについて｜易経を旅する</title>
 <style>
-:root{--paper:#f5efe2;--paper2:#fffaf0;--ink:#2b2118;--sub:#756552;--line:#d6c5a8;--shadow:0 18px 46px rgba(50,35,18,.13)}*{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--ink);font-family:"Yu Mincho","YuMincho","Hiragino Mincho ProN",serif;background:radial-gradient(circle at 50% 0,#fffaf0 0,var(--paper) 48%,#e8dcc8 100%)}main{width:min(780px,92vw);margin:0 auto;padding:38px 0 52px}.back{display:inline-block;margin-bottom:22px;color:var(--ink);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:9px 14px;background:rgba(255,250,240,.8)}article{padding:clamp(24px,5vw,46px);border:1px solid var(--line);border-radius:26px;background:rgba(255,250,240,.92);box-shadow:var(--shadow)}.eyebrow{margin:0;color:var(--sub);font-size:13px;letter-spacing:.16em}h1{font-size:clamp(31px,7vw,48px);font-weight:500;letter-spacing:.06em;margin:9px 0 24px}h2{font-size:21px;font-weight:500;margin:30px 0 8px;padding-bottom:7px;border-bottom:1px solid var(--line)}p{line-height:2;margin:0;color:#3d3127}.credits{margin-top:10px;padding:18px;border-radius:16px;background:#f3eadb}.credits p{margin:4px 0}.notice{font-size:14px;color:var(--sub)}footer{padding:24px;text-align:center;color:#766b60;font-size:13px;line-height:1.8}footer p{margin:2px}
+:root{--paper:#f5efe2;--paper2:#fffaf0;--ink:#2b2118;--sub:#756552;--line:#d6c5a8;--accent:#806548;--soft:#f1e7d6;--shadow:0 18px 46px rgba(50,35,18,.13)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;color:var(--ink);font-family:"Yu Mincho","YuMincho","Hiragino Mincho ProN",serif;background:radial-gradient(circle at 50% 0,#fffaf0 0,var(--paper) 48%,#e8dcc8 100%)}
+main{width:min(820px,92vw);margin:0 auto;padding:32px 0 52px}.back{display:inline-flex;align-items:center;margin-bottom:20px;color:var(--ink);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:9px 15px;background:rgba(255,250,240,.84)}
+article{padding:clamp(24px,5vw,48px);border:1px solid var(--line);border-radius:26px;background:rgba(255,250,240,.94);box-shadow:var(--shadow)}.eyebrow{margin:0;color:var(--sub);font-size:12px;letter-spacing:.18em}h1{font-size:clamp(30px,7vw,48px);font-weight:500;letter-spacing:.06em;margin:9px 0 18px}h2{font-size:21px;font-weight:500;margin:34px 0 11px;padding-bottom:8px;border-bottom:1px solid var(--line)}h3{font-size:17px;font-weight:600;margin:0 0 7px}p{line-height:1.95;margin:0;color:#3d3127}.lead{font-size:clamp(16px,3.8vw,18px)}
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}.feature{padding:18px 16px;border:1px solid var(--line);border-radius:18px;background:var(--soft)}.feature .icon{display:block;font-size:25px;margin-bottom:9px}.feature p{font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;font-size:13px;line-height:1.75;color:var(--sub)}
+ul{margin:10px 0 0;padding-left:1.25em;font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;color:#4a3c30;line-height:1.9}.credits{margin-top:12px;padding:18px;border-radius:16px;background:var(--soft)}.credits p{margin:4px 0}.notice{font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;font-size:13px;color:var(--sub);line-height:1.9}footer{padding:24px;text-align:center;color:#766b60;font-size:13px;line-height:1.8}footer p{margin:2px}
+@media(max-width:680px){main{padding-top:20px}.feature-grid{grid-template-columns:1fr}.feature{display:grid;grid-template-columns:38px 1fr;column-gap:8px}.feature .icon{grid-row:1/3}.feature h3,.feature p{grid-column:2}article{border-radius:22px}}
 </style>
 </head>
 <body>
@@ -15,17 +21,40 @@
 <article>
 <p class="eyebrow">ABOUT THIS APP</p>
 <h1>このアプリについて</h1>
-<p>「易経を旅する」は、易経の八卦と六十四卦を、学習と物語の両方から楽しむためのWebアプリです。</p>
+<p class="lead">「易経を旅する」は、易経の八卦と六十四卦を、<strong>学ぶ・占う・遊ぶ</strong>の三つの入口から楽しむための無料Webアプリです。</p>
+
+<h2>このアプリでできること</h2>
+<div class="feature-grid">
+  <section class="feature"><span class="icon">📖</span><h3>学ぶ</h3><p>八卦の記号・名称・象意や、六十四卦の物語とテーマを、図鑑と学習メニューで確認できます。</p></section>
+  <section class="feature"><span class="icon">🔮</span><h3>占う</h3><p>イーチン旅タロットを一枚引き・三枚引きで楽しめます。テーマ別の読みと易経としての解説も表示します。</p></section>
+  <section class="feature"><span class="icon">🎮</span><h3>遊ぶ</h3><p>絵・テーマ・八卦記号を使ったクイズ、今日の一問、カルタや神経衰弱などで繰り返し学べます。</p></section>
+</div>
+
 <h2>イーチン旅タロット</h2>
-<p>易経六十四卦を、一人の旅人が人生のさまざまな出来事を経験する連続した物語として再構成しています。カードのテーマ、場面、物語、イラストは互いに対応しており、図鑑として読むことも、一枚引き・三枚引きとして楽しむこともできます。</p>
-<h2>八卦学習クイズ</h2>
-<p>乾・坤・震・巽・坎・離・艮・兌の八卦について、記号、名称、自然象、人物、年代、身体部位などを繰り返し学べます。</p>
+<p>易経の六十四卦を、一人の旅人がさまざまな出来事を経験する「64枚で一つの旅」として再構成したオリジナル作品です。各カードには、旅の場面、物語、テーマ、今回のメッセージ、テーマ別リーディング、易経としての読みを収録しています。カード図鑑として順番に読むことも、占いとして偶然出会った一枚を味わうこともできます。</p>
+
+<h2>学習コンテンツ</h2>
+<ul>
+  <li>八卦図鑑と八卦の意味クイズ</li>
+  <li>八卦記号から名前、名前から記号を当てるフラッシュクイズ</li>
+  <li>六十四卦・旅カードの学習一覧</li>
+  <li>絵からテーマ、テーマからカードを当てるクイズ</li>
+  <li>今日の一問、旅の順番、カルタ、神経衰弱などのチャレンジ</li>
+  <li>図鑑・お気に入り・クイズ結果を確認する「旅の記録」</li>
+</ul>
+
 <h2>AIの利用について</h2>
-<p>本作品では、文章整理、コード作成、構成検討、画像制作などにAIを制作支援ツールとして活用しています。企画、世界観、採用する内容の選定、編集、最終判断は制作者が行っています。</p>
+<p>本作品では、文章の整理、コード作成、構成検討、画像制作などにAIを制作支援ツールとして活用しています。企画、世界観、カード構成、採用する内容の選定、編集、最終判断は制作者が行っています。</p>
+
 <h2>クレジット</h2>
-<div class="credits"><p><strong>企画・制作：</strong>りおくま</p><p><strong>制作協力：</strong>ChatGPT（OpenAI）</p><p><strong>著作権表記：</strong>© 2026 りおくま</p></div>
+<div class="credits">
+  <p><strong>企画・制作：</strong>りおくま</p>
+  <p><strong>制作協力：</strong>ChatGPT（OpenAI）</p>
+  <p><strong>著作権表記：</strong>© 2026 りおくま</p>
+</div>
+
 <h2>ご利用にあたって</h2>
-<p class="notice">本アプリは学習・創作・娯楽を目的としています。占い結果は重要な医療、法律、金融その他の専門的判断の代替ではありません。易経そのものは古典ですが、本アプリ独自の文章、構成、物語、デザイン等の無断転載・再配布はご遠慮ください。</p>
+<p class="notice">本アプリは、易経の学習・創作・娯楽を目的としています。占い結果は未来や結果を保証するものではなく、医療・法律・金融その他の専門的判断の代替にはなりません。易経そのものは古典ですが、本アプリ独自の文章、物語、イラスト、構成、デザイン等の無断転載・再配布はご遠慮ください。</p>
 </article>
 </main>
 <footer><p>© 2026 りおくま</p><p>All Rights Reserved.</p></footer>

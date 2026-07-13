@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#efe5d2">
+<title>テーマからカードを当てよう｜イーチン旅タロット</title>
+<style>
+:root{--ink:#33271f;--muted:#74685e;--paper:#fffaf1;--gold:#a87529;--line:#d5c3a6;--ok:#317257;--soft:#efe5d2}
+*{box-sizing:border-box}html{min-height:100%;background:#e9dcc7}body{margin:0;min-height:100%;color:var(--ink);font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;background:radial-gradient(circle at 50% -10%,#fffaf2 0,#f1e7d5 52%,#e5d5bd 100%)}
+button,a{font:inherit}button{touch-action:manipulation}.home{position:fixed;z-index:20;top:max(10px,env(safe-area-inset-top));left:10px;padding:9px 13px;border:1px solid #c9b89c;border-radius:999px;background:#fffaf1ed;color:var(--ink);text-decoration:none;font-size:13px;font-weight:800;box-shadow:0 5px 18px #5036191a}
+.app{width:min(100%,620px);margin:auto;padding:max(58px,calc(env(safe-area-inset-top) + 50px)) 12px max(28px,env(safe-area-inset-bottom))}.top{text-align:center}.eyebrow{margin:0 0 3px;color:var(--gold);font-size:11px;font-weight:900;letter-spacing:.15em}h1{margin:0;font:700 clamp(24px,7vw,34px)/1.25 YuMincho,"Yu Mincho",serif}.lead{margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.65}
+.status{display:flex;align-items:center;gap:10px;margin:12px 3px 9px}.progress{display:flex;gap:5px;flex:1}.dot{height:7px;flex:1;border-radius:10px;background:#d8cab6}.dot.now{background:#76522a;box-shadow:0 0 0 3px #fff8}.dot.done{background:var(--gold)}.score{min-width:67px;text-align:right;color:var(--muted);font-size:12px;font-weight:800}
+.panel{overflow:hidden;border:1px solid var(--line);border-radius:24px;background:#fffaf3eb;box-shadow:0 14px 38px #5c3e1b20}.question{padding:17px 16px 13px;text-align:center;background:linear-gradient(135deg,#fffaf0,#f5e8d1)}.question-label{margin:0 0 5px;color:#8b6631;font-size:11px;font-weight:900;letter-spacing:.12em}.theme{margin:0;font:800 clamp(21px,6vw,30px)/1.35 YuMincho,"Yu Mincho",serif}.one-line{margin:7px 0 0;color:var(--muted);font-size:13px;font-weight:700}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px 10px 12px}.card-choice{position:relative;display:flex;min-width:0;min-height:260px;padding:7px;border:2px solid transparent;border-radius:16px;background:#ede1cf;cursor:pointer;box-shadow:0 5px 12px #4e361d22;transition:transform .15s,border-color .15s,background .15s}.card-choice:active{transform:translateY(2px)}.card-choice img{display:block;width:100%;height:auto;max-height:340px;margin:auto;object-fit:contain;border-radius:8px;filter:drop-shadow(0 4px 4px #3f2b1b30)}.card-choice:disabled{cursor:default}.card-choice.correct{border-color:var(--ok);background:#e2f1e8}.card-choice.wrong{border-color:#ad8150;background:#fff0d6}.badge{display:none;position:absolute;top:5px;left:5px;right:5px;padding:4px;border-radius:9px;background:#266d50e8;color:white;text-align:center;font-size:11px;font-weight:900}.correct .badge{display:block}.answer-names{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 10px 12px}.answer-name{min-width:0;text-align:center;color:var(--muted);font-size:10px;font-weight:800;line-height:1.35}.answer-name strong{display:block;color:var(--ink);font-size:12px}
+.feedback{display:none;padding:0 15px 16px;text-align:center}.feedback.show{display:block}.feedback-title{margin:0;font-size:18px;font-weight:900}.feedback-copy{margin:5px 0 0;color:var(--muted);font-size:13px;line-height:1.65}.next{width:100%;margin-top:11px;padding:13px;border:0;border-radius:14px;background:#76522a;color:#fff;font-weight:900;cursor:pointer}
+.finish{display:none;padding:32px 20px 25px;text-align:center}.finish.show{display:block}.finish .stamp{font-size:50px}.finish h2{margin:4px 0;font:800 25px YuMincho,"Yu Mincho",serif}.finish p{color:var(--muted);line-height:1.7}.actions{display:grid;gap:9px;margin-top:18px}.actions button,.actions a{padding:13px;border-radius:14px;text-decoration:none;font-weight:900}.again{border:0;background:#76522a;color:#fff}.back{border:1px solid #cbb99d;background:#fffaf2;color:var(--ink)}.note{margin:12px 5px 0;color:#7a6d61;text-align:center;font-size:11px;line-height:1.6}
+@media(max-width:470px){.card-choice{min-height:205px;padding:5px}.cards{gap:5px;padding-left:7px;padding-right:7px}.answer-names{gap:5px;padding-left:7px;padding-right:7px}.answer-name{font-size:9px}.answer-name strong{font-size:11px}.question{padding-top:14px}}
+@media(max-width:360px){.card-choice{min-height:180px}.card-choice img{max-height:225px}.theme{font-size:20px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<a class="home" href="index.html">← クイズ一覧</a>
+<main class="app">
+  <header class="top">
+    <p class="eyebrow">THEME → PICTURE</p>
+    <h1>テーマからカードを当てよう</h1>
+    <p class="lead">旅のテーマを読んで、ぴったりの絵を選ぼう。<br>1回3問、1分ほどで遊べます。</p>
+  </header>
+  <div class="status" id="status"><div class="progress" aria-label="3問中の進み具合"><span class="dot now"></span><span class="dot"></span><span class="dot"></span></div><div class="score" id="score">0 / 0 発見</div></div>
+  <section class="panel" aria-live="polite">
+    <div id="game">
+      <div class="question"><p class="question-label">このテーマに合う絵はどれ？</p><p class="theme" id="theme"></p><p class="one-line" id="oneLine"></p></div>
+      <div class="cards" id="cardsArea"></div>
+      <div class="answer-names" id="answerNames" hidden></div>
+      <div class="feedback" id="feedback"><p class="feedback-title" id="feedbackTitle"></p><p class="feedback-copy" id="feedbackCopy"></p><button class="next" id="nextButton" type="button">次のテーマへ</button></div>
+    </div>
+    <div class="finish" id="finish"><div class="stamp">🗺️</div><h2 id="finishTitle"></h2><p id="finishCopy"></p><div class="actions"><button class="again" id="againButton" type="button">もう3問あそぶ</button><a class="back" href="index.html">クイズ一覧へ戻る</a></div></div>
+  </section>
+  <p class="note">絵の細かな違いを楽しんでください。答えたあとは正解の文字入りカードで確認できます。</p>
+</main>
+<script src="../tarot/cards.js"></script>
+<script>
+(() => {
+  const QUESTIONS=3;
+  const theme=document.getElementById('theme'),oneLine=document.getElementById('oneLine'),cardsArea=document.getElementById('cardsArea'),answerNames=document.getElementById('answerNames');
+  const feedback=document.getElementById('feedback'),feedbackTitle=document.getElementById('feedbackTitle'),feedbackCopy=document.getElementById('feedbackCopy'),nextButton=document.getElementById('nextButton');
+  const game=document.getElementById('game'),finish=document.getElementById('finish'),finishTitle=document.getElementById('finishTitle'),finishCopy=document.getElementById('finishCopy'),scoreEl=document.getElementById('score');
+  let deck=[],current=null,options=[],index=0,score=0,locked=false;
+  function shuffle(list){const a=[...list];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+  function imagePath(card,plain=true){return `../tarot/cards/${card.no}${plain?'_plain':''}.webp`}
+  function updateProgress(answered=false){document.querySelectorAll('.dot').forEach((d,i)=>{d.className='dot';if(i<index||(answered&&i===index))d.classList.add('done');else if(i===index)d.classList.add('now')});scoreEl.textContent=`${score} / ${index+(answered?1:0)} 発見`}
+  function chooseOptions(answer){return shuffle([answer,...shuffle(cards.filter(c=>c.no!==answer.no)).slice(0,2)])}
+  function showQuestion(){
+    locked=false;current=deck[index];options=chooseOptions(current);theme.textContent=current.theme;oneLine.textContent=`「${current.oneLine}」`;cardsArea.innerHTML='';answerNames.innerHTML='';answerNames.hidden=true;feedback.classList.remove('show');
+    options.forEach((card,i)=>{const button=document.createElement('button');button.type='button';button.className='card-choice';button.setAttribute('aria-label',`${i+1}枚目の絵`);const img=document.createElement('img');img.src=imagePath(card);img.alt=`選択肢${i+1}の文字のないカードイラスト`;const badge=document.createElement('span');badge.className='badge';badge.textContent='このカード！';button.append(img,badge);button.addEventListener('click',()=>answer(card,button,img));cardsArea.appendChild(button)});updateProgress();
+  }
+  function answer(selected,button){
+    if(locked)return;locked=true;const correct=selected.no===current.no;if(correct)score++;
+    [...cardsArea.children].forEach((b,i)=>{b.disabled=true;const card=options[i];if(card.no===current.no){b.classList.add('correct');const img=b.querySelector('img');img.src=imagePath(card,false);img.alt=`正解、${card.name}の文字入りカード`}else if(b===button){b.classList.add('wrong')}});
+    answerNames.hidden=false;options.forEach(card=>{const label=document.createElement('div');label.className='answer-name';label.innerHTML=`<strong>${Number(card.no)} ${card.name}</strong>${card.theme}`;answerNames.appendChild(label)});
+    feedbackTitle.textContent=correct?'✨ ぴったり！':'🌱 新しいカードを発見！';feedbackCopy.textContent=`正解は ${Number(current.no)}「${current.name}」。${current.oneLine}`;feedback.classList.add('show');nextButton.textContent=index===QUESTIONS-1?'旅の結果を見る':'次のテーマへ';updateProgress(true);
+    const seen=Number(localStorage.getItem('themePictureSeen')||0)+1;localStorage.setItem('themePictureSeen',String(seen));if(correct){const hits=Number(localStorage.getItem('themePictureCorrect')||0)+1;localStorage.setItem('themePictureCorrect',String(hits))}
+  }
+  function complete(){game.hidden=true;document.getElementById('status').hidden=true;finish.classList.add('show');finishTitle.textContent=score===3?'3枚ぜんぶ見つけた！':`${QUESTIONS}つのテーマを旅しました`;finishCopy.textContent=score===3?'テーマから絵を思い出す力が育っています。':'迷った絵も、次に会うときには見つけやすくなっています。'}
+  function start(){deck=shuffle(cards).slice(0,QUESTIONS);index=0;score=0;game.hidden=false;document.getElementById('status').hidden=false;finish.classList.remove('show');showQuestion()}
+  nextButton.addEventListener('click',()=>{index++;index>=QUESTIONS?complete():showQuestion()});document.getElementById('againButton').addEventListener('click',start);start();
+})();
+</script>
+</body>
+</html>

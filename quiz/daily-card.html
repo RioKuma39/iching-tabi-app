@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#efe3ce">
+<title>今日の一枚クイズ｜イーチン旅タロット</title>
+<style>
+:root{--ink:#34271e;--muted:#74675d;--paper:#fffaf1;--gold:#a9762c;--line:#d2bea0;--ok:#337558;--brown:#76522a}
+*{box-sizing:border-box}html{min-height:100%;background:#e4d3b8}body{margin:0;min-height:100%;color:var(--ink);font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;background:radial-gradient(circle at 50% -10%,#fffaf3 0,#efe3cf 48%,#e1cdb0 100%)}button,a{font:inherit}button{touch-action:manipulation}.home{position:fixed;z-index:20;top:max(10px,env(safe-area-inset-top));left:10px;padding:9px 13px;border:1px solid #c8b699;border-radius:999px;background:#fffaf1ed;color:var(--ink);text-decoration:none;font-size:13px;font-weight:800;box-shadow:0 5px 18px #5036191a}.app{width:min(100%,540px);margin:auto;padding:max(58px,calc(env(safe-area-inset-top) + 50px)) 12px max(28px,env(safe-area-inset-bottom))}.top{text-align:center}.date{margin:0 0 3px;color:var(--gold);font-size:12px;font-weight:900;letter-spacing:.08em}h1{margin:0;font:800 clamp(26px,8vw,36px)/1.25 YuMincho,"Yu Mincho",serif}.lead{margin:7px 0 0;color:var(--muted);font-size:13px;line-height:1.65}.month{display:inline-flex;align-items:center;gap:6px;margin-top:9px;padding:6px 11px;border:1px solid #d1bc9c;border-radius:999px;background:#fffaf1b8;color:#6e5538;font-size:11px;font-weight:900}.month strong{font-size:15px;color:var(--ink)}
+.panel{overflow:hidden;margin-top:12px;border:1px solid var(--line);border-radius:25px;background:#fffaf2e8;box-shadow:0 15px 40px #52371b25}.ribbon{padding:10px;text-align:center;background:#775329;color:#fff6e8;font-size:12px;font-weight:900;letter-spacing:.08em}.stage{position:relative;display:grid;place-items:center;min-height:370px;padding:17px;background:linear-gradient(145deg,#e8d9c0,#f8f0e2)}.stage img{display:block;max-width:100%;height:min(54vh,440px);object-fit:contain;border-radius:12px;filter:drop-shadow(0 10px 12px #49321e38);transition:opacity .2s,transform .25s}.stage img.swap{opacity:.18;transform:scale(.97)}.sun{position:absolute;top:12px;right:13px;display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:#fff4c7;color:#a87122;font-size:21px;box-shadow:0 3px 10px #6a4d2226}.quiz{padding:15px}.question{margin:0 0 11px;text-align:center;font-size:17px;font-weight:900}.choices{display:grid;gap:8px}.choice{min-height:50px;padding:10px 13px;border:1px solid #c8b18f;border-radius:13px;background:#fffdf8;color:var(--ink);font-weight:800;line-height:1.45;box-shadow:0 3px 0 #dbc8a9;cursor:pointer}.choice:disabled{opacity:.65}.choice.correct{border-color:var(--ok);background:#e5f2e9;color:#285f49;box-shadow:none;opacity:1}.choice.wrong{border-color:#b17f47;background:#fff0d7;box-shadow:none;opacity:1}
+.result{display:none;padding:16px}.result.show{display:block}.result-head{text-align:center}.stamp{font-size:38px}.result h2{margin:2px 0;font:800 22px YuMincho,"Yu Mincho",serif}.result-message{margin:5px 0 12px;color:var(--muted);font-size:12px;line-height:1.65}.details{display:grid;gap:8px}.detail{padding:10px 11px;border-radius:13px;background:#f2e8d8;font-size:12px;line-height:1.65}.detail strong{display:block;margin-bottom:2px;color:#79572e;font-size:11px;letter-spacing:.07em}.name{font-size:15px;font-weight:900}.actions{display:grid;gap:9px;margin-top:13px}.actions a{padding:12px;border-radius:13px;text-align:center;text-decoration:none;font-weight:900}.library{background:var(--brown);color:#fff}.other{border:1px solid #cbb99d;background:#fffaf2;color:var(--ink)}.complete-note{margin:12px 0 0;color:#796c61;text-align:center;font-size:11px;line-height:1.6}.note{margin:12px 5px 0;color:#786b60;text-align:center;font-size:11px;line-height:1.6}
+@media(max-width:400px){.stage{min-height:325px;padding:13px}.stage img{height:min(49vh,390px)}.quiz{padding:12px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<a class="home" href="index.html">← クイズ一覧</a>
+<main class="app">
+  <header class="top"><p class="date" id="dateLabel"></p><h1>今日の一枚クイズ</h1><p class="lead">今日出会うカードは一枚だけ。<br>30秒の小さな旅を楽しもう。</p><div class="month">今月の旅スタンプ <strong id="monthCount">0</strong>日</div></header>
+  <section class="panel" aria-live="polite">
+    <div class="ribbon" id="ribbon">本日の旅の便り</div>
+    <div class="stage"><img id="cardImage" src="" alt="今日の文字のないカード"><span class="sun">☀</span></div>
+    <div class="quiz" id="quiz"><p class="question">この絵のテーマはどれ？</p><div class="choices" id="choices"></div></div>
+    <div class="result" id="result"><div class="result-head"><div class="stamp">🛂</div><h2 id="resultTitle"></h2><p class="result-message" id="resultMessage"></p></div><div class="details"><div class="detail"><strong>今日のカード</strong><span class="name" id="cardName"></span></div><div class="detail"><strong>旅の物語</strong><span id="story"></span></div><div class="detail"><strong>今日の小さな一歩</strong><span id="advice"></span></div></div><div class="actions"><a class="library" id="libraryLink" href="../tarot/library.html">図鑑で詳しく見る</a><a class="other" href="picture-theme.html">もう少し旅する</a></div><p class="complete-note">今日の旅はこれで完了です。また明日、別の一枚に出会えます。</p></div>
+  </section>
+  <p class="note">連続記録が途切れても、集めたスタンプは消えません。遊べる日に気軽に戻ってきてください。</p>
+</main>
+<script src="../tarot/cards.js"></script>
+<script>
+(() => {
+  const image=document.getElementById('cardImage'),quiz=document.getElementById('quiz'),choices=document.getElementById('choices'),result=document.getElementById('result');
+  const now=new Date(),dateKey=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`,monthKey=dateKey.slice(0,7);
+  let history={};try{history=JSON.parse(localStorage.getItem('dailyCardHistory')||'{}')}catch(e){history={}}
+  function hash(text){let h=2166136261;for(let i=0;i<text.length;i++){h^=text.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
+  function seededShuffle(list,seed){const a=[...list];let s=seed>>>0;for(let i=a.length-1;i>0;i--){s=(Math.imul(s,1664525)+1013904223)>>>0;const j=s%(i+1);[a[i],a[j]]=[a[j],a[i]]}return a}
+  const todayCard=cards[hash(dateKey)%cards.length];
+  function imagePath(card,plain=true){return `../tarot/cards/${card.no}${plain?'_plain':''}.webp`}
+  function updateHeader(){document.getElementById('dateLabel').textContent=`${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日`;document.getElementById('monthCount').textContent=Object.keys(history).filter(k=>k.startsWith(monthKey)&&history[k].completed).length}
+  function buildChoices(){const others=seededShuffle(cards.filter(c=>c.no!==todayCard.no),hash(dateKey+'choices')).slice(0,2);seededShuffle([todayCard,...others],hash(dateKey+'order')).forEach(card=>{const b=document.createElement('button');b.type='button';b.className='choice';b.textContent=card.theme;b.dataset.no=card.no;b.addEventListener('click',()=>answer(card,b));choices.appendChild(b)})}
+  function answer(selected,button){const correct=selected.no===todayCard.no;[...choices.children].forEach(b=>{b.disabled=true;if(b.dataset.no===todayCard.no)b.classList.add('correct')});if(!correct)button.classList.add('wrong');history[dateKey]={completed:true,correct,card:todayCard.no};localStorage.setItem('dailyCardHistory',JSON.stringify(history));setTimeout(()=>showResult(correct,false),350)}
+  function showResult(correct,revisit){
+    quiz.hidden=true;image.classList.add('swap');setTimeout(()=>{image.src=imagePath(todayCard,false);image.alt=`今日のカード、${todayCard.name}`;image.classList.remove('swap')},100);document.getElementById('ribbon').textContent=revisit?'今日出会ったカード':'今日の旅スタンプを獲得';document.getElementById('resultTitle').textContent=revisit?'今日の一枚をもう一度':'今日の一枚に出会いました';document.getElementById('resultMessage').textContent=revisit?'今日の物語と小さな一歩を、いつでも見直せます。':correct?'絵の中から、今日のテーマを見つけられました。':'迷ったことも、カードと出会う大切なきっかけです。';document.getElementById('cardName').textContent=`${Number(todayCard.no)} ${todayCard.name}（${todayCard.yomi}）｜${todayCard.theme}`;document.getElementById('story').textContent=todayCard.story.replace(/\n/g,' ');document.getElementById('advice').textContent=todayCard.advice;document.getElementById('libraryLink').href=`../tarot/library.html?no=${Number(todayCard.no)}`;result.classList.add('show');updateHeader()
+  }
+  image.src=imagePath(todayCard,true);buildChoices();updateHeader();if(history[dateKey]&&history[dateKey].completed)showResult(Boolean(history[dateKey].correct),true)
+})();
+</script>
+</body>
+</html>

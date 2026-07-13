@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#eee2ce">
+<title>旅カード神経衰弱｜イーチン旅タロット</title>
+<style>
+:root{--ink:#34271e;--muted:#74675d;--paper:#fffaf1;--gold:#aa792d;--line:#d2bea0;--ok:#34765a}
+*{box-sizing:border-box}html{min-height:100%;background:#e6d6bd}body{margin:0;min-height:100%;color:var(--ink);font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;background:radial-gradient(circle at 50% -10%,#fffaf2 0,#f0e4d1 50%,#e4d2b8 100%)}button,a{font:inherit}button{touch-action:manipulation}
+.home{position:fixed;z-index:20;top:max(10px,env(safe-area-inset-top));left:10px;padding:9px 13px;border:1px solid #c8b699;border-radius:999px;background:#fffaf1ed;color:var(--ink);text-decoration:none;font-size:13px;font-weight:800;box-shadow:0 5px 18px #5036191a}.app{width:min(100%,590px);margin:auto;padding:max(58px,calc(env(safe-area-inset-top) + 50px)) 12px max(28px,env(safe-area-inset-bottom))}.top{text-align:center}.eyebrow{margin:0 0 3px;color:var(--gold);font-size:11px;font-weight:900;letter-spacing:.15em}h1{margin:0;font:800 clamp(24px,7vw,34px)/1.25 YuMincho,"Yu Mincho",serif}.lead{margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.65}
+.status{display:flex;justify-content:space-between;align-items:center;margin:13px 3px 9px;padding:9px 12px;border:1px solid #d6c5aa;border-radius:14px;background:#fffaf1b8;color:var(--muted);font-size:12px;font-weight:800}.pairs strong,.moves strong{color:var(--ink);font-size:16px}.message{min-height:42px;margin:0 3px 9px;display:grid;place-items:center;padding:7px 12px;border-radius:13px;background:#f9f0e2;color:#765d3b;text-align:center;font-size:13px;font-weight:800;line-height:1.45}.message.match{background:#e7f3eb;color:#285f49}
+.board{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;perspective:1000px}.tile{position:relative;min-width:0;aspect-ratio:2/3;padding:0;border:0;border-radius:13px;background:transparent;cursor:pointer;transform-style:preserve-3d;transition:transform .45s}.tile.open,.tile.matched{transform:rotateY(180deg)}.tile:focus-visible{outline:3px solid #7b5a2d;outline-offset:3px}.face{position:absolute;inset:0;display:grid;place-items:center;overflow:hidden;border-radius:13px;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 7px 16px #53381e29}.back{border:1px solid #ac8757;background:radial-gradient(circle at center,#87643b 0 11%,transparent 12%),repeating-linear-gradient(45deg,#6e4c29 0 8px,#7d5933 8px 16px);color:#fff5df}.back::before{content:"易";display:grid;place-items:center;width:48%;aspect-ratio:1;border:1px solid #ead8b6;border-radius:50%;background:#6c4929dd;font:700 clamp(18px,6vw,29px) YuMincho,"Yu Mincho",serif}.front{transform:rotateY(180deg);border:2px solid #f5e8d5;background:#eee2cf}.front img{width:100%;height:100%;object-fit:contain}.matched .front{border-color:var(--ok);box-shadow:0 0 0 3px #dff0e6,0 7px 16px #53381e29}.kind{position:absolute;left:4px;right:4px;top:4px;padding:3px 2px;border-radius:7px;background:#33271edb;color:white;text-align:center;font-size:9px;font-weight:900}.matched .kind{background:#2f7457e8}.matched-mark{display:none;position:absolute;right:4px;bottom:4px;width:23px;height:23px;place-items:center;border-radius:50%;background:#2f7457;color:#fff;font-size:13px}.matched .matched-mark{display:grid}
+.finish{display:none;margin-top:13px;padding:24px 18px;border:1px solid #d2bea0;border-radius:22px;background:#fffaf2e8;text-align:center;box-shadow:0 12px 30px #52371b20}.finish.show{display:block}.stamp{font-size:48px}.finish h2{margin:3px 0;font:800 25px YuMincho,"Yu Mincho",serif}.finish p{margin:6px 0;color:var(--muted);font-size:13px;line-height:1.7}.found{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:14px 0}.found-item{padding:7px;border-radius:10px;background:#f1e6d5;font-size:11px;line-height:1.45}.found-item strong{display:block;font-size:12px}.actions{display:grid;gap:9px}.actions button,.actions a{padding:13px;border-radius:14px;text-decoration:none;font-weight:900}.again{border:0;background:#76522a;color:#fff}.back-link{border:1px solid #cbb99d;background:#fffaf2;color:var(--ink)}.note{margin:12px 5px 0;color:#786b60;text-align:center;font-size:11px;line-height:1.6}
+@media(max-width:430px){.board{gap:6px}.tile{border-radius:10px}.face{border-radius:10px}.kind{font-size:8px}.message{font-size:12px}.back::before{font-size:20px}}
+@media(max-width:350px){.board{grid-template-columns:repeat(4,1fr);gap:4px}.status{padding-left:8px;padding-right:8px}}
+@media(prefers-reduced-motion:reduce){.tile{transition:none}}
+</style>
+</head>
+<body>
+<a class="home" href="index.html">← クイズ一覧</a>
+<main class="app">
+  <header class="top"><p class="eyebrow">PLAIN × TEXT MEMORY</p><h1>旅カード神経衰弱</h1><p class="lead">同じカードの「絵だけ」と「文字入り」を見つけよう。<br>4組8枚、1〜2分で遊べます。</p></header>
+  <div class="status" id="status"><span class="pairs">見つけた組 <strong id="pairs">0</strong> / 4</span><span class="moves">めくった回数 <strong id="moves">0</strong></span></div>
+  <p class="message" id="message" aria-live="polite">カードを2枚めくってみよう</p>
+  <section class="board" id="board" aria-label="8枚のカード"></section>
+  <section class="finish" id="finish"><div class="stamp">🧳</div><h2>4組ぜんぶ見つけた！</h2><p id="finishCopy"></p><div class="found" id="found"></div><div class="actions"><button class="again" id="again" type="button">別の4組であそぶ</button><a class="back-link" href="index.html">クイズ一覧へ戻る</a></div></section>
+  <p class="note">速さを競わなくて大丈夫。同じイラストを探すうちに、絵とカードの言葉が自然につながります。</p>
+</main>
+<script src="../tarot/cards.js"></script>
+<script>
+(() => {
+  const PAIRS=4,board=document.getElementById('board'),message=document.getElementById('message'),pairsEl=document.getElementById('pairs'),movesEl=document.getElementById('moves'),finish=document.getElementById('finish'),found=document.getElementById('found');
+  let selectedCards=[],tiles=[],first=null,second=null,locked=false,matched=0,moves=0;
+  function shuffle(list){const a=[...list];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+  function imagePath(card,type){return `../tarot/cards/${card.no}${type==='plain'?'_plain':''}.webp`}
+  function makeTile(item,i){
+    const b=document.createElement('button');b.type='button';b.className='tile';b.dataset.no=item.card.no;b.dataset.type=item.type;b.setAttribute('aria-label',`${i+1}番の伏せたカード`);
+    const back=document.createElement('span');back.className='face back';const front=document.createElement('span');front.className='face front';const img=document.createElement('img');img.src=imagePath(item.card,item.type);img.alt=item.type==='plain'?`${item.card.name}の文字のない絵`:`${item.card.name}の文字入りカード`;
+    const kind=document.createElement('span');kind.className='kind';kind.textContent=item.type==='plain'?'絵だけ':'文字入り';const mark=document.createElement('span');mark.className='matched-mark';mark.textContent='✓';front.append(img,kind,mark);b.append(back,front);b.addEventListener('click',()=>flip(b,item));return b;
+  }
+  function flip(tile,item){
+    if(locked||tile.classList.contains('open')||tile.classList.contains('matched'))return;tile.classList.add('open');tile.setAttribute('aria-label',`${item.card.name}の${item.type==='plain'?'絵だけ':'文字入り'}カード`);
+    if(!first){first={tile,item};message.className='message';message.textContent='同じ絵のもう1枚はどこ？';return}
+    second={tile,item};moves++;movesEl.textContent=moves;locked=true;const isPair=first.item.card.no===second.item.card.no&&first.item.type!==second.item.type;
+    if(isPair){setTimeout(matchPair,350)}else{message.className='message';message.textContent='絵をよく見比べてみよう。もう一度出会えるよ';setTimeout(closePair,900)}
+  }
+  function matchPair(){
+    [first.tile,second.tile].forEach(t=>{t.classList.remove('open');t.classList.add('matched');t.disabled=true});matched++;pairsEl.textContent=matched;message.className='message match';message.textContent=`✨ ${first.item.card.name}「${first.item.card.theme}」を発見！`;first=second=null;locked=false;if(matched===PAIRS)setTimeout(complete,600)
+  }
+  function closePair(){[first.tile,second.tile].forEach(t=>{t.classList.remove('open');t.setAttribute('aria-label','伏せたカード')});first=second=null;locked=false}
+  function complete(){
+    finish.classList.add('show');document.getElementById('status').hidden=true;message.hidden=true;board.hidden=true;document.getElementById('finishCopy').textContent=`${moves}回めくって、絵だけと文字入りのペアを見つけました。`;found.innerHTML='';selectedCards.forEach(card=>{const d=document.createElement('div');d.className='found-item';d.innerHTML=`<strong>${Number(card.no)} ${card.name}</strong>${card.theme}`;found.appendChild(d)});const plays=Number(localStorage.getItem('plainTextMemoryPlays')||0)+1;localStorage.setItem('plainTextMemoryPlays',String(plays));const best=Number(localStorage.getItem('plainTextMemoryBest')||0);if(!best||moves<best)localStorage.setItem('plainTextMemoryBest',String(moves))
+  }
+  function start(){
+    selectedCards=shuffle(cards).slice(0,PAIRS);tiles=shuffle(selectedCards.flatMap(card=>[{card,type:'plain'},{card,type:'text'}]));first=second=null;locked=false;matched=0;moves=0;pairsEl.textContent='0';movesEl.textContent='0';document.getElementById('status').hidden=false;message.hidden=false;message.className='message';message.textContent='カードを2枚めくってみよう';board.hidden=false;finish.classList.remove('show');board.innerHTML='';tiles.forEach((item,i)=>board.appendChild(makeTile(item,i)))
+  }
+  document.getElementById('again').addEventListener('click',start);start();
+})();
+</script>
+</body>
+</html>

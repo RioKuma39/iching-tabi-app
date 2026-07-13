@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f4ead7">
+<title>絵からテーマを当てよう｜イーチン旅タロット</title>
+<style>
+:root{--ink:#33271f;--muted:#786b60;--paper:#fffaf0;--gold:#ad7b2c;--line:#ddceb6;--ok:#34755a;--soft:#f4ead7}
+*{box-sizing:border-box}
+html{min-height:100%;background:#efe4d1}
+body{margin:0;min-height:100%;color:var(--ink);font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;background:radial-gradient(circle at 50% 0,#fffaf1 0,#f4ead7 48%,#e8d9c1 100%)}
+button,a{font:inherit}
+button{touch-action:manipulation}
+.home{position:fixed;top:max(10px,env(safe-area-inset-top));left:10px;z-index:10;padding:9px 13px;border:1px solid #cdbb9f;border-radius:999px;background:rgba(255,250,240,.94);color:var(--ink);text-decoration:none;font-size:13px;font-weight:700;box-shadow:0 5px 18px #5036191a}
+.app{width:min(100%,540px);margin:auto;padding:max(58px,calc(env(safe-area-inset-top) + 50px)) 14px max(26px,env(safe-area-inset-bottom))}
+.top{text-align:center;margin-bottom:12px}
+.eyebrow{margin:0 0 3px;color:var(--gold);font-size:11px;font-weight:800;letter-spacing:.16em}
+h1{margin:0;font-family:YuMincho,"Yu Mincho",serif;font-size:clamp(24px,7vw,34px)}
+.lead{margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.65}
+.status{display:flex;align-items:center;gap:10px;margin:12px 2px 9px}
+.progress{display:flex;gap:5px;flex:1}
+.dot{height:7px;flex:1;border-radius:10px;background:#d9ccb8;transition:.25s}
+.dot.done{background:var(--gold)}.dot.now{background:#76522a;box-shadow:0 0 0 3px #fff8}
+.score{min-width:67px;text-align:right;color:var(--muted);font-size:12px;font-weight:700}
+.panel{border:1px solid #d7c6aa;border-radius:24px;background:rgba(255,252,245,.92);box-shadow:0 14px 38px #5c3e1b20;overflow:hidden}
+.card-stage{position:relative;display:grid;place-items:center;min-height:370px;padding:20px;background:linear-gradient(145deg,#e8d9c0,#f8f0e2)}
+.card-stage img{display:block;max-width:100%;width:auto;height:min(54vh,440px);max-height:440px;object-fit:contain;border-radius:12px;filter:drop-shadow(0 10px 12px #49321e38);transition:opacity .22s,transform .3s}
+.card-stage img.swap{opacity:.18;transform:scale(.97)}
+.number{position:absolute;top:12px;right:14px;padding:5px 9px;border-radius:999px;background:#fffaf0dd;color:#70593e;font-size:11px;font-weight:800}
+.play{padding:16px}
+.prompt{margin:0 0 12px;text-align:center;font-size:17px;font-weight:800}
+.choices{display:grid;gap:9px}
+.choice{width:100%;min-height:50px;padding:11px 14px;border:1px solid #cdbb9e;border-radius:14px;background:#fffdf8;color:var(--ink);font-weight:700;line-height:1.45;cursor:pointer;box-shadow:0 3px 0 #d9c7a9}
+.choice:active{transform:translateY(2px);box-shadow:0 1px 0 #d9c7a9}
+.choice:disabled{cursor:default;opacity:.62}.choice.correct{border-color:var(--ok);background:#e9f5ee;color:#225d45;opacity:1}.choice.picked-wrong{border-color:#b38d56;background:#fff5df;opacity:1}
+.feedback{display:none;text-align:center}.feedback.show{display:block}
+.result-mark{font-size:28px}.result-title{margin:2px 0 4px;font-size:19px;font-weight:900}.result-copy{margin:0;color:var(--muted);font-size:13px;line-height:1.65}
+.next{width:100%;margin-top:12px;padding:13px;border:0;border-radius:14px;background:#76522a;color:#fff;font-weight:800;cursor:pointer}
+.finish{display:none;padding:30px 20px 24px;text-align:center}.finish.show{display:block}.finish .stamp{font-size:52px}.finish h2{margin:5px 0;font-family:YuMincho,"Yu Mincho",serif}.finish p{color:var(--muted);line-height:1.7}.actions{display:grid;gap:9px;margin-top:18px}.actions button,.actions a{padding:13px;border-radius:14px;text-decoration:none;font-weight:800}.again{border:0;background:#76522a;color:#fff}.back{border:1px solid #cdbb9e;background:#fffaf2;color:var(--ink)}
+.note{margin:12px 4px 0;color:#7b6d61;font-size:11px;line-height:1.6;text-align:center}
+@media(max-width:390px){.card-stage{min-height:320px;padding:14px}.card-stage img{height:min(49vh,380px)}.play{padding:13px}.choice{min-height:47px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<a class="home" href="index.html">← クイズ一覧</a>
+<main class="app">
+  <header class="top">
+    <p class="eyebrow">PICTURE → THEME</p>
+    <h1>絵からテーマを当てよう</h1>
+    <p class="lead">文字のない絵をよく見て、旅のテーマを選ぼう。<br>1回3問、1分ほどで遊べます。</p>
+  </header>
+  <div class="status" id="status">
+    <div class="progress" aria-label="3問中の進み具合"><span class="dot now"></span><span class="dot"></span><span class="dot"></span></div>
+    <div class="score" id="score">0 / 0 発見</div>
+  </div>
+  <section class="panel" id="game" aria-live="polite">
+    <div class="card-stage">
+      <img id="cardImage" src="" alt="文字のないイーチン旅タロットのカード">
+      <span class="number" id="number"></span>
+    </div>
+    <div class="play" id="play">
+      <p class="prompt">この絵のテーマはどれ？</p>
+      <div class="choices" id="choices"></div>
+      <div class="feedback" id="feedback">
+        <div class="result-mark" id="resultMark"></div>
+        <p class="result-title" id="resultTitle"></p>
+        <p class="result-copy" id="resultCopy"></p>
+        <button class="next" id="nextButton" type="button">次の絵へ</button>
+      </div>
+    </div>
+    <div class="finish" id="finish">
+      <div class="stamp">🧭</div>
+      <h2 id="finishTitle">3枚の旅を発見！</h2>
+      <p id="finishCopy"></p>
+      <div class="actions">
+        <button class="again" id="againButton" type="button">もう3問あそぶ</button>
+        <a class="back" href="index.html">クイズ一覧へ戻る</a>
+      </div>
+    </div>
+  </section>
+  <p class="note">間違えても大丈夫。答えたあとは文字入りカードに変わり、絵とテーマを一緒に確認できます。</p>
+</main>
+<script src="../tarot/cards.js"></script>
+<script>
+(() => {
+  const QUESTIONS = 3;
+  const image = document.getElementById('cardImage');
+  const number = document.getElementById('number');
+  const choices = document.getElementById('choices');
+  const feedback = document.getElementById('feedback');
+  const resultMark = document.getElementById('resultMark');
+  const resultTitle = document.getElementById('resultTitle');
+  const resultCopy = document.getElementById('resultCopy');
+  const nextButton = document.getElementById('nextButton');
+  const play = document.getElementById('play');
+  const finish = document.getElementById('finish');
+  const scoreEl = document.getElementById('score');
+  const finishTitle = document.getElementById('finishTitle');
+  const finishCopy = document.getElementById('finishCopy');
+  let deck = [], current = null, index = 0, score = 0, locked = false;
+
+  function shuffle(list){
+    const a = [...list];
+    for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}
+    return a;
+  }
+  function imagePath(card, plain){return `../tarot/cards/${card.no}${plain?'_plain':''}.webp`}
+  function compactTheme(theme){return theme.replaceAll('・','／')}
+  function updateProgress(answered=false){
+    document.querySelectorAll('.dot').forEach((dot,i)=>{
+      dot.className='dot';
+      if(i<index || (answered&&i===index)) dot.classList.add('done');
+      else if(i===index) dot.classList.add('now');
+    });
+    scoreEl.textContent=`${score} / ${index+(answered?1:0)} 発見`;
+  }
+  function makeOptions(answer){
+    const others=shuffle(cards.filter(c=>c.no!==answer.no && c.theme!==answer.theme));
+    return shuffle([answer,...others.slice(0,2)]);
+  }
+  function showQuestion(){
+    locked=false; current=deck[index]; feedback.classList.remove('show'); choices.hidden=false; choices.innerHTML='';
+    number.textContent=`旅 ${Number(current.no)}`;
+    image.classList.add('swap');
+    setTimeout(()=>{image.src=imagePath(current,true);image.alt=`旅 ${Number(current.no)} の文字のないカードイラスト`;image.classList.remove('swap')},120);
+    makeOptions(current).forEach(card=>{
+      const b=document.createElement('button'); b.type='button'; b.className='choice'; b.textContent=compactTheme(card.theme);
+      b.addEventListener('click',()=>answer(card,b)); choices.appendChild(b);
+    });
+    updateProgress();
+  }
+  function answer(selected,button){
+    if(locked)return; locked=true; const correct=selected.no===current.no; if(correct)score++;
+    [...choices.children].forEach(b=>{b.disabled=true;if(b.textContent===compactTheme(current.theme))b.classList.add('correct')});
+    if(!correct)button.classList.add('picked-wrong');
+    image.classList.add('swap');
+    setTimeout(()=>{image.src=imagePath(current,false);image.alt=`${current.name}、テーマは${current.theme}の文字入りカード`;image.classList.remove('swap')},120);
+    resultMark.textContent=correct?'✨':'🌱';
+    resultTitle.textContent=correct?'ぴったり！':`発見！ 正解は「${current.theme}」`;
+    resultCopy.textContent=`${Number(current.no)} ${current.name}（${current.yomi}）— ${current.oneLine}`;
+    choices.hidden=true; feedback.classList.add('show'); nextButton.textContent=index===QUESTIONS-1?'旅の結果を見る':'次の絵へ';
+    updateProgress(true);
+    const seen=Number(localStorage.getItem('pictureThemeSeen')||0)+1; localStorage.setItem('pictureThemeSeen',String(seen));
+    if(correct){const hits=Number(localStorage.getItem('pictureThemeCorrect')||0)+1;localStorage.setItem('pictureThemeCorrect',String(hits))}
+  }
+  function complete(){
+    play.hidden=true; document.querySelector('.card-stage').hidden=true; document.getElementById('status').hidden=true; finish.classList.add('show');
+    finishTitle.textContent=score===3?'3枚ぜんぶ発見！':`${QUESTIONS}枚の旅に出会いました`;
+    finishCopy.textContent=score===3?'絵の中の手がかりを、よく見つけられました。':'迷ったカードも、今日出会ったことで少しずつ覚えていきます。';
+  }
+  function start(){
+    deck=shuffle(cards).slice(0,QUESTIONS);index=0;score=0;play.hidden=false;document.querySelector('.card-stage').hidden=false;document.getElementById('status').hidden=false;finish.classList.remove('show');showQuestion();
+  }
+  nextButton.addEventListener('click',()=>{index++;index>=QUESTIONS?complete():showQuestion()});
+  document.getElementById('againButton').addEventListener('click',start);
+  image.addEventListener('error',()=>{image.alt='カード画像を読み込めませんでした';});
+  start();
+})();
+</script>
+</body>
+</html>

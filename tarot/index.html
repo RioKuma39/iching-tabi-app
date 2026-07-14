@@ -235,9 +235,6 @@ button:hover,.toggle:hover{
   font-size:18px!important;
   font-weight:600!important;
 }
-.aspect-section{padding:16px 18px;margin:14px 0;border:1px solid rgba(216,200,173,.78);border-radius:14px;background:rgba(251,247,238,.62)}
-.aspect-section+.aspect-section{margin-top:10px}
-.aspect-section .result-heading{color:#526b6d}
 .modal-yomi{
   display:block;
   margin-top:4px;
@@ -320,13 +317,13 @@ button:hover,.toggle:hover{
         
 
         <section class="result-section">
-          <h3 class="result-heading">【このカードのテーマ】</h3>
-          <p id="modalTheme"></p>
+          <h3 class="result-heading">【旅の物語】</h3>
+          <p id="modalStory"></p>
         </section>
 
         <section class="result-section">
-          <h3 class="result-heading">【旅の物語】</h3>
-          <p id="modalStory"></p>
+          <h3 class="result-heading">【このカードのテーマ】</h3>
+          <p id="modalTheme"></p>
         </section>
 
         <section class="result-section">
@@ -334,24 +331,9 @@ button:hover,.toggle:hover{
           <p id="modalMessage"></p>
         </section>
 
-        <section class="result-section aspect-section">
-          <h3 class="result-heading">光の側面</h3>
-          <p id="modalLight"></p>
-        </section>
-
-        <section class="result-section aspect-section">
-          <h3 class="result-heading">影の側面</h3>
-          <p id="modalShadow"></p>
-        </section>
-
         <section class="result-section" id="selectedReadingSection">
           <h3 class="result-heading" id="selectedReadingTitle"></h3>
           <p id="selectedReadingText"></p>
-        </section>
-
-        <section class="result-section">
-          <h3 class="result-heading">【アドバイス】</h3>
-          <p id="modalAdvice"></p>
         </section>
 
         <details class="iching-details">
@@ -518,9 +500,6 @@ function openModal(no,reversed){
     document.getElementById("modalStory").textContent=textOrBlank(c.story);
   document.getElementById("modalTheme").textContent=textOrBlank(c.theme);
   document.getElementById("modalMessage").textContent=textOrBlank(c.message || c.oneLine);
-  document.getElementById("modalLight").textContent=textOrBlank(c.light);
-  document.getElementById("modalShadow").textContent=textOrBlank(c.shadow);
-  document.getElementById("modalAdvice").textContent=textOrBlank(c.advice);
   const selectedSection=document.getElementById("selectedReadingSection");
   if(themeInfo.key){
     selectedSection.hidden=false;

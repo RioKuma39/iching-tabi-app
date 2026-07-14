@@ -62,12 +62,16 @@ header{text-align:center;margin-bottom:24px}h1{margin:0 0 8px;font-size:clamp(30
         <h2>易経の学び</h2><p id="lesson"></p>
       </div>
     </details>
+    <details class="section iching-library study-section" id="titleOriginDetails">
+      <summary>✍️ 卦名の由来</summary>
+      <div class="iching-library-content"><p id="titleOrigin"></p></div>
+    </details>
     <section class="section note-section"><h2>📝 自分のノート</h2><textarea id="cardNote" placeholder="気付いたこと、自分なりの解釈、学習メモ、リーディング結果などを自由に記録できます。" aria-label="このカードの自分のノート"></textarea><div class="note-actions"><button id="saveNoteBtn" type="button">保存</button><button id="deleteNoteBtn" class="delete-note" type="button">削除</button><a class="notes-link" href="notes.html">ノート一覧へ</a><span class="note-status" id="noteStatus" role="status" aria-live="polite"></span></div></section>
   </article>
 </section>
 <section class="indexpanel" id="index"><h2>カードから選ぶ</h2><p>番号・卦名を押すと、そのカードを表示します。</p><div class="numbergrid" id="numberGrid"></div><div class="jump"><label for="jumpNo">番号を入力</label><input id="jumpNo" type="number" min="1" max="64" inputmode="numeric" placeholder="1〜64"><button id="jumpBtn" type="button">表示</button></div><div class="recentpanel"><h2>最近見たカード</h2><div class="recent-list" id="recentList"></div></div></section>
 </main>
-<script src="cards.js?v=20260714-light-shadow-2"></script>
+<script src="cards.js?v=20260714-title-origins"></script>
 <script src="../assets/js/storage.js"></script>
 <script src="../assets/js/notes.js"></script>
 <script>
@@ -77,7 +81,7 @@ header{text-align:center;margin-bottom:24px}h1{margin:0 0 8px;font-size:clamp(30
     return;
   }
   const labels={work:"仕事",love:"恋愛",relationship:"人間関係",money:"お金",health:"体調"};
-  const els={img:document.getElementById("cardImg"),missing:document.getElementById("missing"),counter:document.getElementById("counter"),title:document.getElementById("title"),yomi:document.getElementById("yomi"),story:document.getElementById("story"),theme:document.getElementById("theme"),message:document.getElementById("message"),light:document.getElementById("light"),shadow:document.getElementById("shadow"),advice:document.getElementById("advice"),meanings:document.getElementById("meanings"),upperTitle:document.getElementById("upperTitle"),upperText:document.getElementById("upperText"),lowerTitle:document.getElementById("lowerTitle"),lowerText:document.getElementById("lowerText"),combination:document.getElementById("combination"),lesson:document.getElementById("lesson"),prev:document.getElementById("prevBtn"),next:document.getElementById("nextBtn"),grid:document.getElementById("numberGrid"),jumpNo:document.getElementById("jumpNo")};
+  const els={img:document.getElementById("cardImg"),missing:document.getElementById("missing"),counter:document.getElementById("counter"),title:document.getElementById("title"),yomi:document.getElementById("yomi"),story:document.getElementById("story"),theme:document.getElementById("theme"),message:document.getElementById("message"),light:document.getElementById("light"),shadow:document.getElementById("shadow"),advice:document.getElementById("advice"),meanings:document.getElementById("meanings"),upperTitle:document.getElementById("upperTitle"),upperText:document.getElementById("upperText"),lowerTitle:document.getElementById("lowerTitle"),lowerText:document.getElementById("lowerText"),combination:document.getElementById("combination"),lesson:document.getElementById("lesson"),titleOrigin:document.getElementById("titleOrigin"),titleOriginDetails:document.getElementById("titleOriginDetails"),prev:document.getElementById("prevBtn"),next:document.getElementById("nextBtn"),grid:document.getElementById("numberGrid"),jumpNo:document.getElementById("jumpNo")};
   let current=0;
   let filter="all";
   let mode=localStorage.getItem("ichingLibraryMode")||"beginner";
@@ -134,6 +138,10 @@ header{text-align:center;margin-bottom:24px}h1{margin:0 0 8px;font-size:clamp(30
     els.lowerText.textContent=c.iching?.lowerExplanation||"";
     els.combination.textContent=c.iching?.combination||"";
     els.lesson.textContent=c.iching?.lesson||"";
+    const titleOrigin=c.iching?.study?.titleOrigin??"";
+    els.titleOrigin.textContent=titleOrigin;
+    els.titleOriginDetails.hidden=!titleOrigin;
+    els.titleOriginDetails.open=false;
     const savedNote=IchingNotes.get(c.no);document.getElementById("cardNote").value=savedNote?.note||"";document.getElementById("noteStatus").textContent=savedNote?.updatedAt?`更新：${new Date(savedNote.updatedAt).toLocaleString("ja-JP")}`:"";
     els.prev.disabled=current===0;
     els.next.disabled=current===cards.length-1;

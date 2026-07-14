@@ -377,6 +377,11 @@ button:hover,.toggle:hover{
           </div>
         </details>
 
+        <details class="iching-details" id="titleOriginDetails">
+          <summary>✍️ 卦名の由来</summary>
+          <p id="titleOriginText"></p>
+        </details>
+
         <button class="close" onclick="forceCloseModal()">閉じる</button>
       </div>
     </div>
@@ -538,6 +543,10 @@ function openModal(no,reversed){
   document.getElementById("ichingLowerText").textContent=textOrBlank(c.iching?.lowerExplanation);
   document.getElementById("ichingCombination").textContent=textOrBlank(c.iching?.combination);
   document.getElementById("ichingLesson").textContent=textOrBlank(c.iching?.lesson);
+  const titleOrigin=c.iching?.study?.titleOrigin??"";
+  const titleOriginDetails=document.getElementById("titleOriginDetails");
+  document.getElementById("titleOriginText").textContent=titleOrigin;
+  titleOriginDetails.hidden=!titleOrigin;
 
   modal.querySelectorAll("details").forEach(detail=>{ detail.open=false; });
   modal.classList.add("open");

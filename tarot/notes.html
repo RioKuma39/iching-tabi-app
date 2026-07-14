@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#efe6d4">
+<title>ノート一覧｜イーチン旅タロット</title>
+<style>
+:root{--paper:#f4efe3;--ink:#2a2118;--sub:#7d6d5b;--line:#d8c8ad;--accent:#345d69}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:"Yu Mincho","YuMincho","Hiragino Mincho ProN",serif;background:radial-gradient(circle at 50% 6%,#fffaf0 0,var(--paper) 48%,#e8dcc8 100%);color:var(--ink)}
+.wrap{width:min(920px,92vw);margin:0 auto;padding:max(76px,calc(env(safe-area-inset-top) + 62px)) 0 max(56px,env(safe-area-inset-bottom))}.topnav{position:fixed;top:max(12px,env(safe-area-inset-top));left:12px;right:12px;z-index:20;display:flex;justify-content:space-between;gap:10px;pointer-events:none}.topnav a{pointer-events:auto;text-decoration:none;color:inherit;padding:9px 13px;border:1px solid rgba(120,100,75,.35);border-radius:999px;background:rgba(255,250,240,.92);font:600 13px/1.2 "Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;box-shadow:0 5px 18px rgba(45,30,15,.12)}
+header{text-align:center;margin-bottom:28px}h1{margin:0 0 8px;font-size:clamp(30px,5vw,46px);font-weight:500;letter-spacing:.08em}.lead{margin:0;color:var(--sub);line-height:1.8}.toolbar{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:18px}.count{color:var(--sub)}button{min-height:46px;padding:10px 16px;border:1px solid var(--line);border-radius:10px;background:linear-gradient(180deg,#fffaf0,#eadfc9);color:var(--ink);font:inherit;cursor:pointer}.notes{display:grid;gap:12px}.note-card{display:block;padding:18px 20px;border:1px solid var(--line);border-radius:16px;background:rgba(255,250,240,.8);color:inherit;text-decoration:none;box-shadow:0 8px 22px rgba(54,38,20,.08)}.note-head{display:flex;justify-content:space-between;gap:14px;align-items:baseline}.note-title{font-size:19px}.note-date{color:var(--sub);font-size:13px;white-space:nowrap}.excerpt{margin:10px 0 0;line-height:1.75;white-space:pre-wrap;overflow-wrap:anywhere}.empty{padding:36px 20px;border:1px solid var(--line);border-radius:18px;background:rgba(255,250,240,.7);text-align:center;color:var(--sub);line-height:1.9}
+@media(max-width:600px){.toolbar{align-items:stretch;flex-direction:column}.toolbar button{width:100%}.note-head{align-items:flex-start;flex-direction:column;gap:4px}.note-date{white-space:normal}.note-card{padding:16px}}
+</style>
+</head>
+<body>
+<nav class="topnav"><a href="../index.html">← 目次</a><a href="library.html">64枚図鑑</a></nav>
+<main class="wrap"><header><h1>📝 ノート一覧</h1><p class="lead">64枚のカードに記録した、自分専用の易経ノートです。</p></header><div class="toolbar"><span class="count" id="noteCount"></span><button id="exportBtn" type="button">CSVを書き出す</button></div><section class="notes" id="notes"></section></main>
+<script src="../assets/js/notes.js"></script>
+<script>
+(() => {
+  const notes=IchingNotes.list();
+  document.getElementById("noteCount").textContent=`${notes.length}件のノート`;
+  const list=document.getElementById("notes");
+  if(!notes.length){const empty=document.createElement("div");empty.className="empty";empty.textContent="まだノートはありません。\n図鑑でカードを開き、「自分のノート」から記録できます。";empty.style.whiteSpace="pre-line";list.appendChild(empty);}
+  notes.forEach(item=>{const link=document.createElement("a");link.className="note-card";link.href=`library.html?no=${Number(item.cardNo)}`;const head=document.createElement("div");head.className="note-head";const title=document.createElement("strong");title.className="note-title";title.textContent=`${String(item.cardNo).padStart(2,"0")}　${item.cardName}`;const date=document.createElement("time");date.className="note-date";date.dateTime=item.updatedAt||"";date.textContent=item.updatedAt?new Date(item.updatedAt).toLocaleString("ja-JP"):"";const excerpt=document.createElement("p");excerpt.className="excerpt";const text=String(item.note||"").replace(/\s+/g," ").trim();excerpt.textContent=text.length>50?`${text.slice(0,50)}…`:text;head.append(title,date);link.append(head,excerpt);list.appendChild(link);});
+  document.getElementById("exportBtn").addEventListener("click",()=>IchingNotes.exportCsv());
+})();
+</script>
+</body>
+</html>

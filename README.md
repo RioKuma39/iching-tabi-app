@@ -5,6 +5,7 @@
 - `quiz/index.html`：八卦学習クイズ
 - `tarot/index.html`：イーチン旅タロット（一枚引き・三枚引き）
 - `tarot/library.html`：64卦カード一覧・意味辞典
+- `tarot/notes.html`：カード別ノート一覧・CSV書き出し
 
 ## カード画像
 `tarot/cards/01.webp` 〜 `64.webp` の名前で配置してください。

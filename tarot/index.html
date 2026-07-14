@@ -235,6 +235,15 @@ button:hover,.toggle:hover{
   font-size:18px!important;
   font-weight:600!important;
 }
+.result-subheading{
+  margin:14px 0 6px;
+  font-size:.98rem;
+  color:var(--ink);
+}
+.aspect-details{
+  margin-top:12px;
+}
+
 .modal-yomi{
   display:block;
   margin-top:4px;
@@ -331,10 +340,20 @@ button:hover,.toggle:hover{
           <p id="modalMessage"></p>
         </section>
 
-        <section class="result-section" id="selectedReadingSection">
+        <section class="result-section" id="selectedReadingSection" hidden>
           <h3 class="result-heading" id="selectedReadingTitle"></h3>
           <p id="selectedReadingText"></p>
         </section>
+
+        <details class="iching-details aspect-details">
+          <summary>光の側面</summary>
+          <p id="modalLight"></p>
+        </details>
+
+        <details class="iching-details aspect-details">
+          <summary>闇の側面</summary>
+          <p id="modalShadow"></p>
+        </details>
 
         <details class="iching-details">
           <summary>易経ではどう読む？</summary>
@@ -500,6 +519,8 @@ function openModal(no,reversed){
     document.getElementById("modalStory").textContent=textOrBlank(c.story);
   document.getElementById("modalTheme").textContent=textOrBlank(c.theme);
   document.getElementById("modalMessage").textContent=textOrBlank(c.message || c.oneLine);
+  document.getElementById("modalLight").textContent=textOrBlank(c.light);
+  document.getElementById("modalShadow").textContent=textOrBlank(c.shadow);
   const selectedSection=document.getElementById("selectedReadingSection");
   if(themeInfo.key){
     selectedSection.hidden=false;
@@ -518,7 +539,7 @@ function openModal(no,reversed){
   document.getElementById("ichingCombination").textContent=textOrBlank(c.iching?.combination);
   document.getElementById("ichingLesson").textContent=textOrBlank(c.iching?.lesson);
 
-  modal.querySelector("details").open=false;
+  modal.querySelectorAll("details").forEach(detail=>{ detail.open=false; });
   modal.classList.add("open");
   document.body.style.overflow="hidden";
 }

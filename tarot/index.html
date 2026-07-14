@@ -108,12 +108,6 @@ button:hover,.toggle:hover{
   transform:translateY(-4px);
   box-shadow:0 24px 50px rgba(54,38,20,.26);
 }
-.card img.reversed{
-  transform:rotate(180deg);
-}
-.card:hover img.reversed{
-  transform:rotate(180deg) translateY(4px);
-}
 .card-name{
   margin-top:14px;
   font-size:18px;
@@ -162,9 +156,6 @@ button:hover,.toggle:hover{
   width:100%;
   border-radius:16px;
   box-shadow:0 16px 34px var(--shadow);
-}
-.modal img.reversed{
-  transform:rotate(180deg);
 }
 .modal-text{
   text-align:left;
@@ -244,6 +235,9 @@ button:hover,.toggle:hover{
   font-size:18px!important;
   font-weight:600!important;
 }
+.aspect-section{padding:16px 18px;margin:14px 0;border:1px solid rgba(216,200,173,.78);border-radius:14px;background:rgba(251,247,238,.62)}
+.aspect-section+.aspect-section{margin-top:10px}
+.aspect-section .result-heading{color:#526b6d}
 .modal-yomi{
   display:block;
   margin-top:4px;
@@ -308,7 +302,7 @@ button:hover,.toggle:hover{
     <button onclick="draw(1)">一枚引き</button>
     <button onclick="draw(3)">三枚引き</button>
     <button onclick="location.href='library.html'">64卦一覧</button>
-    <label class="toggle"><input type="checkbox" id="reverseMode">逆位置を使う</label>
+    
   </div>
 
   <div class="spread-note" id="spreadNote">カードを引いてください</div>
@@ -323,12 +317,7 @@ button:hover,.toggle:hover{
       <img id="modalImg" src="" alt="">
       <div class="modal-text">
         <h2 id="modalTitle"></h2>
-        <p id="modalReverse"></p>
-
-        <section class="result-section">
-          <h3 class="result-heading">【旅の物語】</h3>
-          <p id="modalStory"></p>
-        </section>
+        
 
         <section class="result-section">
           <h3 class="result-heading">【このカードのテーマ】</h3>
@@ -336,13 +325,33 @@ button:hover,.toggle:hover{
         </section>
 
         <section class="result-section">
+          <h3 class="result-heading">【旅の物語】</h3>
+          <p id="modalStory"></p>
+        </section>
+
+        <section class="result-section">
           <h3 class="result-heading">【今回のメッセージ】</h3>
           <p id="modalMessage"></p>
+        </section>
+
+        <section class="result-section aspect-section">
+          <h3 class="result-heading">光の側面</h3>
+          <p id="modalLight"></p>
+        </section>
+
+        <section class="result-section aspect-section">
+          <h3 class="result-heading">影の側面</h3>
+          <p id="modalShadow"></p>
         </section>
 
         <section class="result-section" id="selectedReadingSection">
           <h3 class="result-heading" id="selectedReadingTitle"></h3>
           <p id="selectedReadingText"></p>
+        </section>
+
+        <section class="result-section">
+          <h3 class="result-heading">【アドバイス】</h3>
+          <p id="modalAdvice"></p>
         </section>
 
         <details class="iching-details">
@@ -423,7 +432,7 @@ function enableLazyLoad(root=document){
 }
 
 function draw(num){
-  const useReverse=document.getElementById("reverseMode").checked;
+  const useReverse=false;
   const selected=shuffle(cards).slice(0,num).map(c=>({
     ...c,
     reversed: useReverse ? Math.random() < 0.5 : false
@@ -454,11 +463,11 @@ function draw(num){
     img.loading = "lazy";
     img.decoding = "async";
     img.alt = c.name;
-    if(c.reversed) img.className = "reversed";
+    
 
     const nameEl = document.createElement("div");
     nameEl.className = "card-name";
-    nameEl.innerHTML = `${c.no}　${c.name}<br><small>${c.yomi}</small>${c.reversed ? '<div class="rev">逆位置</div>' : ''}`;
+    nameEl.innerHTML = `${c.no}　${c.name}<br><small>${c.yomi}</small>`;
 
     cardEl.append(img, nameEl);
     slot.append(labelEl, cardEl);
@@ -502,14 +511,16 @@ function openModal(no,reversed){
   img.src=cardImagePath(c.no);
   img.loading="eager";
   img.decoding="async";
-  img.className=reversed ? "reversed" : "";
+  img.className="";
   img.onerror=()=>{ img.onerror=null; img.src=CARD_PLACEHOLDER; };
 
   document.getElementById("modalTitle").innerHTML=`${c.no}　${c.name}<span class="modal-yomi">${c.yomi || ""}</span>`;
-  document.getElementById("modalReverse").textContent=reversed ? "逆位置として、意味の弱まり・偏り・内面化も含めて読みます。" : "";
-  document.getElementById("modalStory").textContent=textOrBlank(c.story);
+    document.getElementById("modalStory").textContent=textOrBlank(c.story);
   document.getElementById("modalTheme").textContent=textOrBlank(c.theme);
   document.getElementById("modalMessage").textContent=textOrBlank(c.message || c.oneLine);
+  document.getElementById("modalLight").textContent=textOrBlank(c.light);
+  document.getElementById("modalShadow").textContent=textOrBlank(c.shadow);
+  document.getElementById("modalAdvice").textContent=textOrBlank(c.advice);
   const selectedSection=document.getElementById("selectedReadingSection");
   if(themeInfo.key){
     selectedSection.hidden=false;
